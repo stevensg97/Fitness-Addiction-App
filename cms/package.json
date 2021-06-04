@@ -1,5 +1,5 @@
 {
-  "name": "fitness_app",
+  "name": "fitness_addiction",
   "private": true,
   "version": "1.0.0",
   "description": "",
@@ -27,6 +27,6 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/stevensg97/FitnessApp.git"
+    "url": "https://github.com/stevensg97/Fitness-Addiction-App.git"
   }
 }

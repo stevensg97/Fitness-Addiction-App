@@ -11,11 +11,24 @@ export default {
       type: 'string',
     },
     {
+      title: 'Type',
+      name: 'type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Hypertrophy', value: 'hypertrophy'},
+          {title: 'Functional', value: 'functional'},
+          {title: 'Pilates', value: 'pilates'}
+        ]
+      }
+    },
+    {
       title: 'Exercises',
       name: 'exercises',
       type: 'array',
       of: [
         {
+          title: 'Workout',
           name: 'workout',
           type: 'object',
           fields: [
@@ -80,6 +93,11 @@ export default {
           }
         },
       ]
+    },
+    {
+      title: 'Public',
+      name: 'public',
+      type: 'boolean',
     },
   ]
 }
