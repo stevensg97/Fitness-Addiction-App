@@ -1,71 +1,71 @@
 import React from 'react';
 
 export default {
-  title: 'Routine',
+  title: 'Rutina',
   name: 'routine',
   type: 'document',
   fields: [
     {
-      title: 'Name',
+      title: 'Nombre',
       name: 'name',
       type: 'string',
     },
     {
-      title: 'Type',
+      title: 'Tipo',
       name: 'type',
       type: 'string',
       options: {
         list: [
-          {title: 'Hypertrophy', value: 'hypertrophy'},
-          {title: 'Functional', value: 'functional'},
+          {title: 'Hipertrofia', value: 'hypertrophy'},
+          {title: 'Funcional', value: 'functional'},
           {title: 'Pilates', value: 'pilates'}
         ]
       }
     },
     {
-      title: 'Exercises',
+      title: 'Ejercicios',
       name: 'exercises',
       type: 'array',
       of: [
         {
-          title: 'Workout',
+          title: 'Trabajo',
           name: 'workout',
           type: 'object',
           fields: [
             {
-              title: 'Exercise',
+              title: 'Ejercicio',
               name: 'exercise',
               type: 'reference',
               to: [{type: 'exercise'}]
             },
             {
-              title: 'Sets',
+              title: 'Series',
               name: 'sets',
               type: 'number',
             },
             {
-              title: 'Repetitions',
+              title: 'Repeticiones',
               name: 'repetitions',
               type: 'number',
             },
             {
-              title: 'Rest',
+              title: 'Descanso',
               name: 'rest',
               type: 'object',
               fields: [
                 {
-                  title: 'Quantity',
+                  title: 'Cantidad',
                   name: 'quantity',
                   type: 'number',
                 },
                 {
-                  title: 'Unit',
+                  title: 'Unidad de tiempo',
                   name: 'unit',
                   type: 'string',
                   options: {
                     list: [
-                      {title: 'Minutes', value: 'min'},
-                      {title: 'Seconds', value: 's'}
+                      {title: 'Minutos', value: 'min'},
+                      {title: 'Segundos', value: 's'}
                     ]
                   }
                 }
@@ -86,7 +86,7 @@ export default {
               const {exercise, muscle, sets, repetitions, restQuantity, restUnit, imageUrl} = selection
               return {
                 title: `${exercise} (${muscle})`,
-                subtitle: `Sets: ${sets} | Reps: ${repetitions} | Rest: ${restQuantity}${restUnit}`,
+                subtitle: `Series: ${sets} | Reps: ${repetitions} | Desc: ${restQuantity}${restUnit}`,
                 media: <img src={imageUrl}/>
               }
             }
@@ -95,7 +95,7 @@ export default {
       ]
     },
     {
-      title: 'Public',
+      title: '¿Publicar?',
       name: 'public',
       type: 'boolean',
     },

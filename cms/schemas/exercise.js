@@ -1,20 +1,20 @@
 export default {
-  title: 'Exercise',
+  title: 'Ejercicio',
   name: 'exercise',
   type: 'document',
   fields: [
     {
-      title: 'Name',
+      title: 'Nombre',
       name: 'name',
       type: 'string',
     },
     {
-      title: 'Image',
+      title: 'Imagen',
       name: 'image',
       type: 'image'
     },
     {
-      title: 'Muscle',
+      title: 'Músculo',
       name: 'muscle',
       type: 'reference',
       to: [{type: 'muscle'}]

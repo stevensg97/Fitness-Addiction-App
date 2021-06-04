@@ -1,5 +1,5 @@
 export default {
-  title: 'User',
+  title: 'Usuario',
   name: 'user',
   type: 'document',
   initialValue: {
@@ -7,43 +7,43 @@ export default {
   },
   fields: [
     {
-      title: 'First Name',
+      title: 'Nombre',
       name: 'name',
       type: 'string',
     },
     {
-      title: 'First Last Name',
+      title: 'Primer apellido',
       name: 'flname',
       type: 'string',
     },
     {
-      title: 'Second Last Name',
+      title: 'Segundo apellido',
       name: 'slname',
       type: 'string',
     },
     {
-      title: 'Email',
+      title: 'Correo electrónico',
       name: 'email',
       type: 'slug',
     },
     {
-      title: 'Password',
+      title: 'Contraseña',
       name: 'password',
       type: 'string',
       hidden: true
     },
     {
-      title: 'Phone number',
+      title: 'Número de teléfono',
       name: 'phone_number',
       type: 'string',
     },
     {
-      title: 'Is an admin?',
+      title: '¿Es un administrador?',
       name: 'admin',
       type: 'boolean',
     },
     {
-      title: 'Subscription',
+      title: 'Suscripción',
       name: 'subscription',
       type: 'object',
       initialValue: {
@@ -57,12 +57,12 @@ export default {
           to: [{ type: 'plan' }]
         },
         {
-          title: 'Active',
+          title: 'Activo',
           name: 'active',
           type: 'boolean',
         },
         {
-          title: 'Starting date',
+          title: 'Fecha inicial',
           name: 'starting_date',
           type: 'date',
           options: {
@@ -71,7 +71,7 @@ export default {
           }
         },
         {
-          title: 'Ending date',
+          title: 'Fecha final',
           name: 'ending_date',
           type: 'date',
           options: {
@@ -82,7 +82,7 @@ export default {
       ]
     },
     {
-      title: 'Measures',
+      title: 'Medidas',
       name: 'measures',
       type: 'object',
       initialValue: {
@@ -95,33 +95,33 @@ export default {
       },
       fields: [
         {
-          title: 'Height (cm)',
+          title: 'Altura (cm)',
           name: 'height',
           type: 'number',
         },
         {
-          title: 'Weight (Kg)',
+          title: 'Peso (Kg)',
           name: 'weight',
           type: 'number',
         },
         {
-          title: 'BMI',
+          title: 'IMC',
           name: 'bmi',
           type: 'number',
           validation: (Rule) => Rule.precision(2),
         },
         {
-          title: 'Muscle percentage',
+          title: 'Porcentaje muscular',
           name: 'muscle_percentage',
           type: 'number',
         },
         {
-          title: 'Body fat percentage',
+          title: 'Porcentaje de grasa corporal',
           name: 'body_fat_percentage',
           type: 'number',
         },
         {
-          title: 'Bone percentage',
+          title: 'Porcentaje óseo',
           name: 'bone_percentage',
           type: 'number',
         },

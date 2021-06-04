@@ -4,38 +4,38 @@ export default {
   type: 'document',
   fields: [
     {
-      title: 'Name',
+      title: 'Nombre',
       name: 'name',
       type: 'string',
     },
     {
-      title: 'Type',
+      title: 'Tipo',
       name: 'type',
       type: 'string',
       options: {
         list: [
-          {title: 'Functional', value: 'functional'},
-          {title: 'Musculation', value: 'musculation'},
-          {title: 'Functional and Musculation', value: 'functional and musculation'},
+          {title: 'Funcional', value: 'functional'},
+          {title: 'Musculación', value: 'musculation'},
+          {title: 'Funcional y Musculación', value: 'functional and musculation'},
           {title: 'Pilates', value: 'pilates'}
         ]
       }
     },
     {
-      title: 'Days',
+      title: 'Días',
       name: 'days',
       type: 'string',
       options: {
         list: [
-          {title: '30 days', value: '30'},
-          {title: '15 days', value: '15'},
-          {title: '7 days', value: '7'},
-          {title: '1 day', value: '1'}
+          {title: '30', value: '30'},
+          {title: '15', value: '15'},
+          {title: '7', value: '7'},
+          {title: '1', value: '1'}
         ]
       }
     },
     {
-      title: 'Price',
+      title: 'Precio',
       name: 'price',
       type: 'number',
     }
