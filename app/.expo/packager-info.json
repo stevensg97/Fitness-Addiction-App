@@ -1,8 +1,8 @@
 {
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "expoServerPort": null,
+  "expoServerNgrokUrl": "https://ty-v9h.stevensg97.app.exp.direct",
+  "packagerNgrokUrl": "https://packager.ty-v9h.stevensg97.app.exp.direct",
+  "ngrokPid": 14164,
+  "expoServerPort": 19000,
   "devToolsPort": 19002,
   "packagerPort": 19000,
   "webpackServerPort": null

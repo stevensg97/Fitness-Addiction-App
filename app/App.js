@@ -46,7 +46,7 @@ export default class App extends React.Component {
               </Left>
               <Body>
                 <Title>Fitness Addiction</Title>
-                <Subtitle>#PPT :c</Subtitle>
+                <Subtitle>#PPT</Subtitle>
               </Body>
 
             </Header>
