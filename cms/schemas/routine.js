@@ -16,11 +16,16 @@ export default {
       type: 'string',
       options: {
         list: [
-          {title: 'Hipertrofia', value: 'hypertrophy'},
-          {title: 'Funcional', value: 'functional'},
-          {title: 'Pilates', value: 'pilates'}
+          {title: 'Hipertrofia', value: 'Hipertrofia'},
+          {title: 'Funcional', value: 'Funcional'},
+          {title: 'Pilates', value: 'Pilates'}
         ]
       }
+    },
+    {
+      title: 'Imagen',
+      name: 'image',
+      type: 'image',
     },
     {
       title: 'Ejercicios',

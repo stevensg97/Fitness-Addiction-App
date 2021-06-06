@@ -31,12 +31,12 @@ export default {
     {
       title: 'Correo electrónico',
       name: 'email',
-      type: 'text'
+      type: 'string'
     },
     {
       title: 'Phone number',
       name: 'phone_number',
-      type: 'text'
+      type: 'string'
     },
     {
       title: 'Redes sociales',
