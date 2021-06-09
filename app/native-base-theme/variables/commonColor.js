@@ -132,10 +132,10 @@ export default {
 
   // Color
   brandPrimary: platform === PLATFORM.IOS ? '#700909' : '#700909',
-  brandInfo: '#62B1F6',
-  brandSuccess: '#5cb85c',
-  brandDanger: '#d9534f',
-  brandWarning: '#f0ad4e',
+  brandInfo: '#007B93',
+  brandSuccess: '#21BA40',
+  brandDanger: '#B51545',
+  brandWarning: '#B78000',
   brandDark: '#000',
   brandLight: '#a9a9a9',
 
@@ -188,7 +188,7 @@ export default {
   iosStatusbar: 'dark-content',
   toolbarDefaultBorder: platform === PLATFORM.IOS ? '#a7a6ab' : '#700909',
   get statusBarColor() {
-    return color(this.toolbarDefaultBg).darken(0.2).hex();
+    return color(this.toolbarDefaultBg).hex();
   },
   get darkenHeader() {
     return color(this.tabBgColor).darken(0.03).hex();

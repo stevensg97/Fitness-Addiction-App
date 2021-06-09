@@ -2,18 +2,16 @@ export const ALERTS = {
   WRONG: "Wrong user or password.",
   PASSWORD_NOT_MATCH: "Password does not match.",
   SIGNIN_SUCCESS: 'User created successfully.',
-  FAILURE: 'Something went wrong, try again.',
-  CAMERA_PERMISSION: "No se tuvo acceso a la camara",
+  FAILURE: 'Algo salió mal, por favor inténtelo de nuevo.',
   ERROR_LOGIN: 'Usuario o contraseña incorrecta.',
   ERROR: 'Algo salió mal. Revise su email o intente más tarde.',
-  PRODUCTO_NO_REGISTRADO: 'Producto no registrado'
+  ROUTINE_MODAL_CLOSED: 'Se ha cerrado la rutina.'
 }
 
 export const BUTTONS = {
-  VENTAS: 'Ventas',
-  LOGIN: 'LOGIN',
-  SIGNIN: 'Sign In',
-  FORGOT: 'Forgot your password?',
+  LOGIN: 'Iniciar Sesión',
+  SIGNIN: 'Registrarse',
+  FORGOT: '¿Olvidó su contraseña?',
   LANGUAGE: 'Language',
   LOGOUT: 'Log Out',
   ABOUT: 'About',
@@ -25,8 +23,7 @@ export const BUTTONS = {
   FACTURAS: 'Facturas',
   INVENTARIO: 'Inventario',
   BUSCAR: 'Buscar',
-  AGREGAR: 'Agregar Productos',
-  SIGUIENTE: 'Siguiente'
+  CLOSE: 'Cerrar'
 }
 
 export const ICONS = {
@@ -35,12 +32,21 @@ export const ICONS = {
   MD_APPS: 'md-apps',
   MD_TRENDING_UP: 'md-trending-up',
   MD_CAMERA: 'md-camera',
-  MD_CLIPBOARD: 'md-clipboard',
   MD_MENU: 'md-menu',
+  MD_CLIPBOARD: 'md-clipboard',
   MD_PAPER: 'md-paper',
   MD_REFRESH: 'md-refresh',
   MD_OPTIONS: 'md-options',
-  MD_RIGHT_ARROW: 'md-arrow-round-forward'
+  MD_RIGHT_ARROW: 'md-arrow-round-forward',
+  MD_HOME: 'md-home',
+  MD_HOME_OUTLINE: 'md-home-outline',
+  MD_PERSON_OUTLINE: 'md-person-outline',
+  MD_LIST_OUTLINE: 'md-list-outline',
+  MD_CART_OUTLINE: 'md-cart-outline',
+  MD_COG_OUTLINE: 'md-cog-outline',
+  MD_CHATBUBBLES_OUTLINE: 'md-chatbubbles-outline',
+  MD_INFOMATION_CIRCLE_OUTLINE: 'md-information-circle-outline',
+  MD_LOG_OUT_OUTLINE: 'md-log-out-outline'
 }
 
 export const LANGUAGES = {
@@ -48,39 +54,59 @@ export const LANGUAGES = {
   ES: 'Spanish'
 }
 
-export const NUMBER_OF_COLUMNS = 2;
-
-export const OPTIONS_SCREENS = {
-  HOME: 'Home'
+export const AD_TYPES = {
+  AD: 'ad',
+  EVENT: 'event'
 }
+
+export const SCREENS = {
+  HOME: 'Home',
+  PROFILE: 'Profile',
+  MENU: 'Menu',
+  STORE: 'Store',
+  CONFIGURATIONS: 'Configurations',
+  CONTACT: 'Contact',
+  ABOUT: 'About',
+  LOGIN: 'Login',
+  SIGNIN: 'Signin',
+}
+
+export const DRAWER_OPTIONS = [
+
+    {screen: SCREENS.HOME, name: 'Inicio', icon: ICONS.MD_HOME_OUTLINE},
+    {screen: SCREENS.PROFILE, name: 'Perfil', icon: ICONS.MD_PERSON_OUTLINE},
+    {screen: SCREENS.MENU, name: 'Menú', icon: ICONS.MD_LIST_OUTLINE},
+    {screen: SCREENS.STORE, name: 'Tienda', icon: ICONS.MD_CART_OUTLINE},
+    {screen: SCREENS.CONFIGURATIONS, name: 'Configuraciones', icon: ICONS.MD_COG_OUTLINE},
+    {screen: SCREENS.CONTACT, name: 'Contacto', icon: ICONS.MD_CHATBUBBLES_OUTLINE},
+    {screen: SCREENS.ABOUT, name: 'Acerca de', icon: ICONS.MD_INFOMATION_CIRCLE_OUTLINE},
+    {screen: SCREENS.LOGIN, name: 'Cerrar Sesión', icon: ICONS.MD_LOG_OUT_OUTLINE}
+]
 
 export const PLACEHOLDERS = {
   NAME: 'Name',
   LASTNAME: 'Lastname',
-  EMAIL: 'Email',
-  PASSWORD: 'Password',
-  CHECK_PASSWORD: 'Check password',
-  BUSCAR_PRODUCTOS: 'Buscar productos'
-}
-
-export const SCREENS = {
-  LOGIN: "Login",
-  SIGNIN: "SignIn",
-  HOME: "Home",
-  VENTAS: 'Ventas',
+  EMAIL: 'Correo electrónico',
+  PASSWORD: 'Contraseña',
+  CHECK_PASSWORD: 'Verificar contraseña'
 }
 
 export const TITLES = {
-  EMARKET: "eMarket",
-  COD: 'Cod',
-  STOCK: 'Stock',
-  ESCANER: 'Escáner',
-  CANTIDAD: 'Cant'
+  FITNESS_ADDICTION: 'Fitness Addiction',
+  HOME: 'Inicio',
+  ROUTINES: 'Rutinas',
+  SETS: 'Series',
+  REPETITIONS: 'Reps',
+  CADENCY: 'Cad',
+  REST: 'Desc',
+  DATE: 'Fecha',
+  TIME: 'Hora',
+  SPACE_AVAILABLE: 'Cupos disponibles',
+  REGISTER: 'Inscribirse',
+  WELCOME: 'Bienvenido'
 }
 
 export const VALUES = {
-  //URL: 'http://192.168.100.5:1337/',
-  URL: 'https://tamarindodiria.serveo.net/',
   DATE_API_URL: 'http://worldclockapi.com/api/json/est/now',
   WEBPAGE: 'Web Page',
   DATE: 'Date: ',

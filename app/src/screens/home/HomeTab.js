@@ -1,85 +1,56 @@
 import React, { Component } from 'react';
-import AppLoading from 'expo-app-loading';
-import { FlatList, LogBox, Image, View } from 'react-native';
-import getTheme from '../../../native-base-theme/components';
+import { FlatList, LogBox, Image, Alert, StyleSheet } from 'react-native';
 import {
-  StyleProvider,
-  Accordion,
-  Tab,
-  Tabs,
-  TabHeading,
-  Icon,
   Text,
-  Header,
   Left,
-  Right,
   Body,
-  Title,
   Container,
-  Button,
-  Item,
-  Input,
-  Fab,
   Card,
   CardItem,
-  CardBody,
-  Thumbnail,
-  ListItem,
-  Picker,
-  Footer,
-  FooterTab
+  Right,
+  Button
 } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import commonColor from '../../../native-base-theme/variables/commonColor';
-import { colors } from '../../config/styles';
 import {
   SCREENS,
   ALERTS,
-  PLACEHOLDERS,
   BUTTONS,
   TITLES,
-  VALUES,
-  ICONS,
+  AD_TYPES
 } from '../../config/constants';
+import { ADS } from '../../utils/querys'
 import { useNavigation } from '@react-navigation/native';
 import client from '../../utils/client';
 import imageUrlBuilder from '@sanity/image-url';
+import moment from "moment";
+import 'moment/locale/es.js';
 
 const builder = imageUrlBuilder(client);
 
-class RoutineTab extends Component {
+class HomeTab extends Component {
   constructor(props) {
     LogBox.ignoreLogs(['Setting a timer']);
     super(props);
     this.state = {
-      active: false,
       loading: false,
-      menu: false,
-      visibleScanner: false,
-      visibleOrder: false,
-      routines: [],
-      error: null
+      ads: [],
     };
     this.sale = [];
     this.arrayholder = [];
   }
 
   async componentDidMount() {
-    await this._getRoutines();
+    await this._getAds();
   }
 
-  _getRoutines = () => {
+  _getAds = () => {
     client
       .fetch(
-        `*[_type == 'routine']{
-          _id, name, type, image, exercises[]{sets, repetitions, rest, exercise->{name, image, muscle->{name}}}
-        }`
+        ADS
       )
       .then(res => {
-        this.setState({ routines: res });
-        this.arrayholder = this.state.routines;
-        console.log(this.arrayholder);
+        this.setState({ ads: res });
+        this.arrayholder = this.state.ads;
+        //console.log(this.arrayholder);
       })
       .catch(err => {
         this.setState({ isLoading: false });
@@ -94,23 +65,34 @@ class RoutineTab extends Component {
 
   render() {
     const { navigation } = this.props;
-
     return (
       <Container>
         <FlatList
-          data={this.state.routines}
+          data={this.state.ads}
           renderItem={({ item }) => (
             <Card>
-              <CardItem cardBody button onPress={() => alert(item.exercises[0].exercise.name)}>
-                <Image source={{ uri: builder.image(item.image).url(), }} style={{ height: 200, width: null, flex: 1 }} />
+              <CardItem cardBody>
+                <Image source={{ uri: builder.image(item.image).url() }} style={styles.image} />
               </CardItem>
               <CardItem>
                 <Left>
                   <Body>
                     <Text>{item.name}</Text>
-                    <Text note>{item.type}</Text>
+                    <Text note>{item.description}</Text>
                   </Body>
                 </Left>
+                {item.type == AD_TYPES.EVENT &&
+                  <Right>
+                    <Body >
+                      <Left>
+                        <Text>{TITLES.DATE}: {moment(item.datetime).locale('es').format('D MMM YYYY')}</Text>
+                        <Text>{TITLES.TIME}: {moment(item.datetime).locale('es').format('h:mm a')}</Text>
+                        <Text>{TITLES.SPACE_AVAILABLE}: {item.people_limit - item.people.length}</Text>
+                      </Left>
+                    </Body>
+                    <Button rounded onPress={() => alert(item.people.length)} ><Text>{TITLES.REGISTER}</Text></Button>
+                  </Right>
+                }
               </CardItem>
             </Card>
           )}
@@ -121,8 +103,16 @@ class RoutineTab extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    height: 200,
+    width: null
+  },
+});
+
 export default function (props) {
   const navigation = useNavigation();
 
-  return <RoutineTab {...props} navigation={navigation} />;
+  return <HomeTab {...props} navigation={navigation} />;
 }

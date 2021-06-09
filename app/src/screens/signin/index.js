@@ -25,7 +25,7 @@ import client from '../../utils/client';
 
 import { useNavigation } from '@react-navigation/native';
 
-class LoginScreen extends Component {
+class SigninScreen extends Component {
 
   constructor(props) {
     LogBox.ignoreLogs(['Setting a timer']);
@@ -85,8 +85,8 @@ class LoginScreen extends Component {
   };
 
   _onSignInPressed = () => {
-    //this.props.navigation.navigate(SCREENS.SIGNIN);
-    alert(BUTTONS.LOGIN);
+    this.props.navigation.navigate(SCREENS.SIGNIN);
+    alert(BUTTONS.SIGNIN);
   };
 
   render() {
@@ -135,7 +135,7 @@ class LoginScreen extends Component {
             />
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('Home')/* this._onLoginPressed */}
+              onPress={() => navigation.goBack()/* this._onLoginPressed */}
             >
               <Text style={styles.buttonText}>{BUTTONS.LOGIN}</Text>
             </TouchableOpacity>
@@ -157,7 +157,7 @@ class LoginScreen extends Component {
 export default function (props) {
   const navigation = useNavigation();
 
-  return <LoginScreen {...props} navigation={navigation} />;
+  return <SigninScreen {...props} navigation={navigation} />;
 }
 
 const styles = StyleSheet.create({

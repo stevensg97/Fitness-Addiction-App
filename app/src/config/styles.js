@@ -82,7 +82,14 @@ export const colors = {
   color_danger_transparent_300: "rgba(181, 21, 69, 0.24)",
   color_danger_transparent_400: "rgba(181, 21, 69, 0.32)",
   color_danger_transparent_500: "rgba(181, 21, 69, 0.4)",
-  color_danger_transparent_600: "rgba(181, 21, 69, 0.48)"
+  color_danger_transparent_600: "rgba(181, 21, 69, 0.48)",
+
+  //Colors for component states
+  color_primary_focus: "$color_primary_700",
+  color_primary_hover: "$color_primary_400",
+  color_primary_default: "$color_primary_500",
+  color_primary_active: "$color_primary_600",
+  color_primary_disabled: "$color_primary_300"
 }
 
 export const commonStyles = {
@@ -94,19 +101,6 @@ export const commonStyles = {
   },
   buttonText: {
     color: colors.white,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
-  selectedButtonContainer: {
-    backgroundColor: colors.white,
-    borderWidth: 0.5,
-    borderColor: colors.deepgreen,
-    borderRadius: 15,
-    margin: 5,
-    paddingVertical: 15
-  },
-  selectedButtonText: {
-    color: colors.deepgreen,
     fontWeight: '700',
     textAlign: 'center',
   },

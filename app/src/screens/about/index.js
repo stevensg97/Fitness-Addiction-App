@@ -19,8 +19,6 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../config/styles';
 import { useNavigation } from '@react-navigation/native';
-import RoutinesTab from './RoutinesTab';
-import HomeTab from './HomeTab';
 import { ICONS, TITLES } from '../../config/constants';
 
 const renderTabBar = (props) => {
@@ -28,7 +26,7 @@ const renderTabBar = (props) => {
   return <DefaultTabBar {...props} />;
 };
 
-class HomeScreen extends Component {
+class AboutScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -66,11 +64,7 @@ class HomeScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>{TITLES.HOME}</Text></TabHeading>}>
-              <HomeTab />
-            </Tab>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_CLIPBOARD} /><Text>{TITLES.ROUTINES}</Text></TabHeading>}>
-              <RoutinesTab />
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Acerca de</Text></TabHeading>} tabStyle={{ /* ... */ }}>
             </Tab>
           </Tabs>
         </Container>
@@ -108,5 +102,5 @@ const styles = StyleSheet.create({
 export default function (props) {
   const navigation = useNavigation();
 
-  return <HomeScreen {...props} navigation={navigation} />;
+  return <AboutScreen {...props} navigation={navigation} />;
 }

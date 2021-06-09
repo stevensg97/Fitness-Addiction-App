@@ -54,6 +54,19 @@ export default {
               type: 'number',
             },
             {
+              title: 'Cadencia',
+              name: 'cadency',
+              type: 'number',
+              options: {
+                list: [
+                  {title: '101', value: 101},
+                  {title: '102', value: 102},
+                  {title: '103', value: 103},
+                  {title: '202', value: 202},
+                ]
+              }
+            },
+            {
               title: 'Descanso',
               name: 'rest',
               type: 'object',
@@ -75,6 +88,11 @@ export default {
                   }
                 }
               ]
+            },
+            {
+              title: 'Superserie',
+              name: 'superset',
+              type: 'boolean',
             },
           ],
           preview: {
