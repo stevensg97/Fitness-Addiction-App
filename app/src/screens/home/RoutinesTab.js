@@ -53,7 +53,7 @@ class RoutinesTab extends Component {
       .then(res => {
         this.setState({ routines: res });
         this.arrayholder = this.state.routines;
-        //console.log(this.arrayholder);
+        console.log(this.arrayholder);
       })
       .catch(err => {
         this.setState({ isLoading: false });
@@ -124,14 +124,14 @@ class RoutinesTab extends Component {
                   <CardItem>
                     <Left>
                       <Body>
-                        <Text>{item.exercise.name}</Text>
+                        <Text>{item.exercise.name} {item.superset && TITLES.SUPERSET}</Text>
                         <Text>{TITLES.SETS}: {item.sets} | {TITLES.REPETITIONS}: {item.repetitions} | {TITLES.REST}: {item.rest.quantity}{item.rest.unit} | {TITLES.CADENCY}: {item.cadency}</Text>
                       </Body>
                     </Left>
                   </CardItem>
                 </Card>
               )}
-              keyExtractor={item => item.exercise._id}
+              keyExtractor={item => item.exercise._id+item.sets}
             />
             <Pressable
               style={[styles.button, styles.buttonClose]}

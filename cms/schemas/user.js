@@ -100,7 +100,7 @@ export default {
           type: 'number',
         },
         {
-          title: 'Peso (Kg)',
+          title: 'Peso (kg)',
           name: 'weight',
           type: 'number',
         },

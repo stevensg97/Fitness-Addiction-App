@@ -85,8 +85,7 @@ class LoginScreen extends Component {
   };
 
   _onSignInPressed = () => {
-    //this.props.navigation.navigate(SCREENS.SIGNIN);
-    alert(BUTTONS.LOGIN);
+    this.props.navigation.navigate(SCREENS.SIGNIN);
   };
 
   render() {

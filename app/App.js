@@ -26,7 +26,7 @@ export default function App() {
   return (
     <StyleProvider style={getTheme(commonColor)}>
       <NavigationContainer >
-        <Drawer.Navigator initialRouteName={SCREENS.HOME} drawerContent={props => <DrawerContent {...props}/>}>
+        <Drawer.Navigator initialRouteName={SCREENS.LOGIN} drawerContent={props => <DrawerContent {...props}/>}>
           <Drawer.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Drawer.Screen name={SCREENS.LOGIN} component={LoginScreen} />
           <Drawer.Screen name={SCREENS.ABOUT} component={AboutScreen} />

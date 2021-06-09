@@ -31,63 +31,151 @@ class SigninScreen extends Component {
     LogBox.ignoreLogs(['Setting a timer']);
     super(props);
     this.state = {
+      fnameString: '',
+      flnameString: '',
+      slnameString: '',
       emailString: '',
       passwordString: '',
+      checkPasswordString: '',
+      phoneNumberString: '',
+      heightString: '',
+      weightString: '',
       isLoading: false
     };
   }
 
-  _onLoginPressed = () => {
+  _checkTextInputs = () => {
+    //Check for the Firstname TextInput
+    if (!this.state.fnameString.trim()) {
+      alert('Debe ingresar el nombre');
+      return;
+    }
+    //Check for the First Lastname TextInput
+    if (!this.state.flnameString.trim()) {
+      alert('Debe ingresar el primer apellido');
+      return;
+    }
+    if (!this.state.slnameString.trim()) {
+      alert('Debe ingresar el segundo apellido');
+      return;
+    }
+    if (!this.state.emailString.trim()) {
+      alert('Debe ingresar el correo electrónico');
+      return;
+    }
+    if (!this.state.passwordString.trim()) {
+      alert('Debe ingresar la contraseña');
+      return;
+    }
+    if (!this.state.checkPasswordString.trim()) {
+      alert('Debe verificar la contraseña');
+      return;
+    }
+    if (this.state.passwordString != this.state.checkPasswordString) {
+      alert('La contraseña no coincide');
+      return;
+    }
+    //Checked Successfully
+    //Do whatever you want
+    return true
+  }
+
+  _onSigninPressed = () => {
     this.setState({ isLoading: true });
-    client
-      .fetch(
-        `*[_type == 'user' && email.current == \'${this.state.emailString}\' ]{password}`
-      )
-      .then(res => {
-        if (
-          this.state.passwordString == res[0].password
-        ) {
-          this.setState({ isLoading: false });
-          this.props.navigation.navigate(SCREENS.HOME);
-          this.setState({ emailString: '' });
-          this.setState({ passwordString: '' });
-        } else {
-          this.setState({ isLoading: false });
-          Alert.alert(
-            SCREENS.LOGIN,
-            ALERTS.ERROR_LOGIN,
-            [{ text: BUTTONS.OK }],
-            { cancelable: false }
-          );
-        }
-      })
-      .catch(err => {
-        this.setState({ isLoading: false });
+    if (this._checkTextInputs()) {
+      const doc = {
+        _id: this.state.emailString.replace('@', '-'),
+        _type: 'user',
+        name: this.state.fnameString,
+        flname: this.state.flnameString,
+        slname: this.state.slnameString,
+        email: { current: this.state.emailString },
+        password: this.state.passwordString,
+        phone_number: this.state.phoneNumberString,
+        admin: false
+      }
+
+      client.create(doc).then((res) => {
+        console.log('User was created document ID is ' + res._id)
         Alert.alert(
-          SCREENS.LOGIN,
-          ALERTS.ERROR,
+          SCREENS.SIGNIN,
+          ALERTS.SIGNIN_SUCCESS,
           [{ text: BUTTONS.OK }],
           { cancelable: false }
         );
       })
+        .then(() => { this._resetState(); this.props.navigation.navigate(SCREENS.LOGIN); })
+        .catch((err) => {
+          console.error('Hubo un error al crear el usuario: ', err.message);
+          this.setState({ isLoading: false });
+          Alert.alert(
+            SCREENS.SIGNIN,
+            ALERTS.ERROR_SIGNIN,
+            [{ text: BUTTONS.OK }],
+            { cancelable: false }
+          );
+        })
+    }
+
+
   };
 
-  _onLoginTextChangedEmail = event => {
+  _onSigninTextChangedFName = event => {
+    this.setState({
+      fnameString: event.nativeEvent.text
+    });
+  };
+
+  _onSigninTextChangedFLName = event => {
+    this.setState({
+      flnameString: event.nativeEvent.text
+    });
+  };
+
+  _onSigninTextChangedSLName = event => {
+    this.setState({
+      slnameString: event.nativeEvent.text
+    });
+  };
+
+  _onSigninTextChangedEmail = event => {
     this.setState({
       emailString: event.nativeEvent.text
     });
   };
 
-  _onLoginTextChangedPassword = event => {
+  _onSigninTextChangedPassword = event => {
     this.setState({
       passwordString: event.nativeEvent.text
     });
   };
 
-  _onSignInPressed = () => {
-    this.props.navigation.navigate(SCREENS.SIGNIN);
-    alert(BUTTONS.SIGNIN);
+  _onSigninTextChangedCheckPassword = event => {
+    this.setState({
+      checkPasswordString: event.nativeEvent.text
+    });
   };
+
+  _onSigninTextChangedPhoneNumber = event => {
+    this.setState({
+      phoneNumberString: event.nativeEvent.text
+    });
+  };
+
+  _resetState = () => {
+    this.setState({
+      fnameString: '',
+      flnameString: '',
+      slnameString: '',
+      emailString: '',
+      passwordString: '',
+      checkPasswordString: '',
+      phoneNumberString: '',
+      heightString: '',
+      weightString: '',
+      isLoading: false
+    });
+  }
 
   render() {
     const { navigation } = this.props;
@@ -111,42 +199,108 @@ class SigninScreen extends Component {
           <View style={styles.containerForm}>
             <TextInput
               style={styles.input}
-              autoCapitalize={VALUES.NONE}
-              onSubmitEditing={() => this.passwordInput.focus()}
+              autoCapitalize={'words'}
+              onSubmitEditing={() => this.flnameInput.focus()}
               autoCorrect={false}
-              keyboardType={VALUES.EMAIL_ADDRESS}
-              value={this.state.emailString}
-              onChange={this._onLoginTextChangedEmail}
+              keyboardType={'default'}
+              value={this.state.fnameString}
+              onChange={this._onSigninTextChangedFName}
               underlineColorAndroid={colors.transparent}
               returnKeyType={VALUES.NEXT}
+              ref={input => (this.fnameInput = input)}
+              placeholder={PLACEHOLDERS.FNAME}
+              placeholderTextColor={colors.placeholderColor}
+
+            />
+            <TextInput
+              style={styles.input}
+              autoCapitalize={'words'}
+              onSubmitEditing={() => this.slnameInput.focus()}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.flnameString}
+              onChange={this._onSigninTextChangedFLName}
+              underlineColorAndroid={colors.transparent}
+              returnKeyType={VALUES.NEXT}
+              ref={input => (this.flnameInput = input)}
+              placeholder={PLACEHOLDERS.FLNAME}
+              placeholderTextColor={colors.placeholderColor}
+            />
+            <TextInput
+              style={styles.input}
+              autoCapitalize={'words'}
+              onSubmitEditing={() => this.phoneNumberInput.focus()}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.slnameString}
+              onChange={this._onSigninTextChangedSLName}
+              underlineColorAndroid={colors.transparent}
+              returnKeyType={VALUES.NEXT}
+              ref={input => (this.slnameInput = input)}
+              placeholder={PLACEHOLDERS.SLNAME}
+              placeholderTextColor={colors.placeholderColor}
+            />
+            <TextInput
+              style={styles.input}
+              autoCapitalize={'words'}
+              onSubmitEditing={() => this.emailInput.focus()}
+              autoCorrect={false}
+              keyboardType={'phone-pad'}
+              value={this.state.phoneNumberString}
+              onChange={this._onSigninTextChangedPhoneNumber}
+              underlineColorAndroid={colors.transparent}
+              returnKeyType={VALUES.NEXT}
+              ref={input => (this.phoneNumberInput = input)}
+              placeholder={PLACEHOLDERS.PHONE_NUMBER}
+              placeholderTextColor={colors.placeholderColor}
+            />
+            <TextInput
+              style={styles.input}
+              autoCapitalize={'none'}
+              onSubmitEditing={() => this.passwordInput.focus()}
+              autoCorrect={false}
+              keyboardType={'email-address'}
+              value={this.state.emailString}
+              onChange={this._onSigninTextChangedEmail}
+              underlineColorAndroid={colors.transparent}
+              returnKeyType={VALUES.NEXT}
+              ref={input => (this.emailInput = input)}
               placeholder={PLACEHOLDERS.EMAIL}
               placeholderTextColor={colors.placeholderColor}
             />
             <TextInput
               style={styles.input}
-              returnKeyType={VALUES.GO}
+              autoCapitalize={'none'}
+              onSubmitEditing={() => this.checkPasswordInput.focus()}
+              autoCorrect={false}
+              keyboardType={'default'}
+              value={this.state.passwordString}
+              onChange={this._onSigninTextChangedPassword}
+              underlineColorAndroid={colors.transparent}
+              returnKeyType={VALUES.NEXT}
               ref={input => (this.passwordInput = input)}
               placeholder={PLACEHOLDERS.PASSWORD}
-              value={this.state.passwordString}
-              onChange={this._onLoginTextChangedPassword}
+              placeholderTextColor={colors.placeholderColor}
+              secureTextEntry
+            />
+            <TextInput
+              style={styles.input}
+              returnKeyType={VALUES.GO}
+              ref={input => (this.checkPasswordInput = input)}
+              placeholder={PLACEHOLDERS.CHECK_PASSWORD}
+              value={this.state.checkPasswordString}
+              onChange={this._onSigninTextChangedCheckPassword}
               underlineColorAndroid={colors.transparent}
               placeholderTextColor={colors.placeholderColor}
               secureTextEntry
             />
+
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.goBack()/* this._onLoginPressed */}
+              onPress={this._onSigninPressed}
             >
-              <Text style={styles.buttonText}>{BUTTONS.LOGIN}</Text>
+              <Text style={styles.buttonText}>{BUTTONS.SIGNIN}</Text>
             </TouchableOpacity>
-            <View style={styles.containerLink}>
-              <TouchableOpacity onPress={this._onSignInPressed}>
-                <Text style={styles.textLink}>{BUTTONS.SIGNIN}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.textLink}>{BUTTONS.FORGOT}</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </KeyboardAvoidingView>
       </LinearGradient>

@@ -4,6 +4,7 @@ export const ALERTS = {
   SIGNIN_SUCCESS: 'User created successfully.',
   FAILURE: 'Algo salió mal, por favor inténtelo de nuevo.',
   ERROR_LOGIN: 'Usuario o contraseña incorrecta.',
+  ERROR_SIGNIN: 'El correo ya se encuentra registrado.',
   ERROR: 'Algo salió mal. Revise su email o intente más tarde.',
   ROUTINE_MODAL_CLOSED: 'Se ha cerrado la rutina.'
 }
@@ -84,11 +85,15 @@ export const DRAWER_OPTIONS = [
 ]
 
 export const PLACEHOLDERS = {
-  NAME: 'Name',
-  LASTNAME: 'Lastname',
+  FNAME: 'Nombre',
+  FLNAME: 'Primer apellido',
+  SLNAME: 'Segundo apellido',
   EMAIL: 'Correo electrónico',
   PASSWORD: 'Contraseña',
-  CHECK_PASSWORD: 'Verificar contraseña'
+  CHECK_PASSWORD: 'Verificar contraseña',
+  PHONE_NUMBER: 'Teléfono',
+  HEIGHT: 'Altura (cm)',
+  WEIGHT: 'Peso (kg)'
 }
 
 export const TITLES = {
@@ -103,7 +108,8 @@ export const TITLES = {
   TIME: 'Hora',
   SPACE_AVAILABLE: 'Cupos disponibles',
   REGISTER: 'Inscribirse',
-  WELCOME: 'Bienvenido'
+  WELCOME: 'Bienvenido',
+  SUPERSET: '(Superserie)'
 }
 
 export const VALUES = {

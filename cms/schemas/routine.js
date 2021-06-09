@@ -103,13 +103,14 @@ export default {
               repetitions: 'repetitions',
               restQuantity: 'rest.quantity',
               restUnit: 'rest.unit',
+              cadency: 'cadency',
               imageUrl: 'exercise.image.asset.url'
             },
             prepare(selection) {
-              const {exercise, muscle, sets, repetitions, restQuantity, restUnit, imageUrl} = selection
+              const {exercise, muscle, sets, repetitions, restQuantity, restUnit, cadency, imageUrl} = selection
               return {
                 title: `${exercise} (${muscle})`,
-                subtitle: `Series: ${sets} | Reps: ${repetitions} | Desc: ${restQuantity}${restUnit}`,
+                subtitle: `Series: ${sets} | Reps: ${repetitions} | Desc: ${restQuantity}${restUnit} | Cad: ${cadency}`,
                 media: <img src={imageUrl}/>
               }
             }
