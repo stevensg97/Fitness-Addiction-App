@@ -40,6 +40,16 @@ export const ICONS = {
   MD_OPTIONS: 'md-options',
   MD_RIGHT_ARROW: 'md-arrow-round-forward',
   MD_HOME: 'md-home',
+  MD_PERSON: 'md-person',
+  MD_LIST: 'md-list',
+  MD_CART: 'md-cart',
+  MD_COG: 'md-cog',
+  MD_CHATBUBBLES: 'md-chatbubbles',
+  MD_INFOMATION_CIRCLE: 'md-information-circle',
+  MD_LOG_OUT: 'md-log-out',
+  MD_CALL: 'md-call',
+  MD_MAIL: 'md-mail',
+  MD_PIN: 'md-pin',
   MD_HOME_OUTLINE: 'md-home-outline',
   MD_PERSON_OUTLINE: 'md-person-outline',
   MD_LIST_OUTLINE: 'md-list-outline',
@@ -47,7 +57,9 @@ export const ICONS = {
   MD_COG_OUTLINE: 'md-cog-outline',
   MD_CHATBUBBLES_OUTLINE: 'md-chatbubbles-outline',
   MD_INFOMATION_CIRCLE_OUTLINE: 'md-information-circle-outline',
-  MD_LOG_OUT_OUTLINE: 'md-log-out-outline'
+  MD_LOG_OUT_OUTLINE: 'md-log-out-outline',
+  LOGO_FACEBOOK: 'logo-facebook',
+  LOGO_INSTAGRAM: 'logo-instagram',
 }
 
 export const LANGUAGES = {
@@ -109,7 +121,11 @@ export const TITLES = {
   SPACE_AVAILABLE: 'Cupos disponibles',
   REGISTER: 'Inscribirse',
   WELCOME: 'Bienvenido',
-  SUPERSET: '(Superserie)'
+  SUPERSET: '(Superserie)',
+  PHONE_NUMBER: 'Teléfono',
+  EMAIL: 'Correo electrónico',
+  LOCATION: 'Ubicación',
+  SOCIAL_NETWORKS: 'Redes sociales'
 }
 
 export const VALUES = {

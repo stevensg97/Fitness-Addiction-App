@@ -64,7 +64,7 @@ class ConfigurationsScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Configuraciones</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_COG} /><Text>Configuraciones</Text></TabHeading>} disabled>
             </Tab>
           </Tabs>
         </Container>

@@ -64,7 +64,7 @@ class StoreScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Tienda</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_CART} /><Text>Tienda</Text></TabHeading>} disabled>
             </Tab>
           </Tabs>
         </Container>

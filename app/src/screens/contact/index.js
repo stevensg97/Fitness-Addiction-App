@@ -15,11 +15,10 @@ import {
   Icon,
   Body
 } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../../config/styles';
 import { useNavigation } from '@react-navigation/native';
 import { ICONS, TITLES } from '../../config/constants';
+import ContactTab from './ContactTab'
 
 const renderTabBar = (props) => {
   props.tabStyle = Object.create(props.tabStyle);
@@ -31,24 +30,11 @@ class ContactScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReady: false,
     };
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
-    });
-    this.setState({ isReady: true });
   }
 
   render() {
     const { navigation } = this.props;
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
 
     return (
       <View style={styles.container}>
@@ -64,7 +50,8 @@ class ContactScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Contacto</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_CHATBUBBLES} /><Text>Contacto</Text></TabHeading>} disabled>
+              <ContactTab/>
             </Tab>
           </Tabs>
         </Container>

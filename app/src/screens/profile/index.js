@@ -64,7 +64,7 @@ class ProfileScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Perfil</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_PERSON} /><Text>Perfil</Text></TabHeading>} disabled>
             </Tab>
           </Tabs>
         </Container>

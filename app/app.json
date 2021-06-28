@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Fitness-Addiction",
+    "name": "Fitness Addiction",
     "slug": "Fitness-Addiction",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -26,7 +26,7 @@
       }
     },
     "web": {
-      "favicon": "./src/assets/favicon.png"
+      "favicon": "./src/assets/favicon.ico"
     }
   }
 }

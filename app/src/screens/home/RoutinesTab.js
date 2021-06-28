@@ -45,6 +45,10 @@ class RoutinesTab extends Component {
     await this._getRoutines();
   }
 
+  componentDidUpdate(){
+    //this._getRoutines();
+  }
+
   _getRoutines = () => {
     client
       .fetch(
@@ -53,7 +57,7 @@ class RoutinesTab extends Component {
       .then(res => {
         this.setState({ routines: res });
         this.arrayholder = this.state.routines;
-        console.log(this.arrayholder);
+        //console.log(this.arrayholder);
       })
       .catch(err => {
         this.setState({ isLoading: false });

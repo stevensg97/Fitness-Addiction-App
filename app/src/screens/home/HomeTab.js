@@ -42,6 +42,10 @@ class HomeTab extends Component {
     await this._getAds();
   }
 
+  componentDidUpdate(){
+    //this._getAds(); Genera demasiados request
+  }
+
   _getAds = () => {
     client
       .fetch(

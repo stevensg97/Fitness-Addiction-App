@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image, FlatList } from 'react-native';
+import { View, StyleSheet, Image, FlatList, ImageBackground } from 'react-native';
 import {
   Text,
   Left,
@@ -13,6 +13,7 @@ import {
 } from 'native-base';
 import IconLogo from '../../assets/logo.png';
 import IconUser from '../../assets/user.jpg';
+import DrawerBackground from '../../assets/drawerBackground8.png';
 import { TITLES, DRAWER_OPTIONS } from '../../config/constants';
 
 const name = 'Steven';
@@ -20,9 +21,11 @@ const name = 'Steven';
 export default function DrawerContent(props) {
   return (
     <Container>
-      <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={IconLogo} />
-      </View>
+      <ImageBackground source={DrawerBackground} style={styles.imageBackground}>
+        <View style={styles.logoContainer}>
+          <Image style={styles.logo} source={IconLogo} />
+        </View>
+      </ImageBackground>
       <Card>
         <CardItem>
           <Left>
@@ -60,12 +63,17 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   logoContainer: {
-    flex: 0.8,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo: {
-    resizeMode: "contain",
+    resizeMode: 'contain',
     height: 130,
   },
+  imageBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: "center"
+  }
 });

@@ -34,8 +34,13 @@ export default {
       type: 'string'
     },
     {
-      title: 'Phone number',
+      title: 'Teléfono',
       name: 'phone_number',
+      type: 'string'
+    },
+    {
+      title: 'Ubicación',
+      name: 'location',
       type: 'string'
     },
     {

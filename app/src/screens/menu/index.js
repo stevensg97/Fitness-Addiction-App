@@ -64,7 +64,7 @@ class MenuScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Menu</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_LIST} /><Text>Menú</Text></TabHeading>} disabled>
             </Tab>
           </Tabs>
         </Container>

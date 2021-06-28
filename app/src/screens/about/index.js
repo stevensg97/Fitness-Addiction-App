@@ -64,7 +64,7 @@ class AboutScreen extends Component {
             </Body>
           </Header>
           <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>Acerca de</Text></TabHeading>} tabStyle={{ /* ... */ }}>
+            <Tab heading={<TabHeading><Icon name={ICONS.MD_INFOMATION_CIRCLE} /><Text>Acerca de</Text></TabHeading>} disabled>
             </Tab>
           </Tabs>
         </Container>
