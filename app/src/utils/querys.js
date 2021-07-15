@@ -10,3 +10,7 @@ export const INFORMATION = `*[_type == 'information']{
     phone_number, email, location, social_networks
   }`
 
+export const USER = `*[_type == 'user']{
+    name, flname, slname, email, password, phone_number, subscription, measures
+  }`
+

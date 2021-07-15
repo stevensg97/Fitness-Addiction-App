@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { FlatList, LogBox, Image, Alert, StyleSheet, Modal, Pressable } from 'react-native';
+import { LogBox, Image, Alert, StyleSheet, Pressable } from 'react-native';
 import {
   Text,
-  Left,
-  Body,
-  Container,
-  Card,
-  CardItem,
-  Header,
-  Title
+  Heading,
+  AspectRatio,
+  FlatList,
+  VStack,
+  HStack,
+  Box,
+  Center,
+  Modal
 } from 'native-base';
 import {
   SCREENS,
@@ -28,7 +29,7 @@ const builder = imageUrlBuilder(client);
 
 class RoutinesTab extends Component {
   constructor(props) {
-    LogBox.ignoreLogs(['Setting a timer']);
+    LogBox.ignoreLogs(['NativeBase:']);
     super(props);
     this.state = {
       loading: false,
@@ -45,7 +46,7 @@ class RoutinesTab extends Component {
     await this._getRoutines();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     //this._getRoutines();
   }
 
@@ -82,100 +83,75 @@ class RoutinesTab extends Component {
     const { navigation } = this.props;
 
     return (
-      <Container>
+      <Box>
         {/*================= Routines List =================*/}
         <FlatList
           data={this.state.routines}
           renderItem={({ item, index }) => (
-            <Card>
-              <CardItem cardBody button onPress={() => { this._setRoutinesModalVisible(true); this._setRoutinesModalExercises(index, item.name) }}>
-                <Image source={{ uri: builder.image(item.image).url(), }} style={styles.image} />
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Body>
-                    <Text>{item.name}</Text>
-                    <Text note>{item.type}</Text>
-                  </Body>
-                </Left>
-              </CardItem>
-            </Card>
+            <Pressable onPress={() => { this._setRoutinesModalVisible(true); this._setRoutinesModalExercises(index, item.name) }} >
+              <Box border={0.5} my={1} borderRadius='md' >
+                <Box px={4} pt={4} bg='primary.700'>
+                  <Center pb={1}>
+                    <Heading size="sm" color='white'>{item.name}</Heading>
+                    <Text color='ligthgrey'>{item.type}</Text>
+                  </Center>
+                </Box>
+                <AspectRatio w="100%" ratio={16 / 9}>
+                  <Image
+                    source={{
+                      uri: builder.image(item.image).url(),
+                    }}
+                    alt="Alternate Text"
+                  />
+                </AspectRatio>
+              </Box>
+            </Pressable>
+
           )}
           keyExtractor={item => item._id}
         />
 
         {/*================= Routine Modal =================*/}
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.routinesModalVisible}
-          onRequestClose={() => {
-            Alert.alert(ALERTS.ROUTINE_MODAL_CLOSED);
-            this._setRoutinesModalVisible(!this.state.routinesModalVisible);
-          }}
-        >
-          <Container>
-            <Header>
-              <Title>{this.state.routineName}</Title>
-            </Header>
-            <FlatList
-              data={this.state.exercises}
-              renderItem={({ item }) => (
-                <Card>
-                  <CardItem cardBody button onPress={() => alert(item.exercise.name)}>
-                    <Image source={{ uri: builder.image(item.exercise.image).url(), }} style={styles.imageModal} />
-                  </CardItem>
-                  <CardItem>
-                    <Left>
-                      <Body>
-                        <Text>{item.exercise.name} {item.superset && TITLES.SUPERSET}</Text>
-                        <Text>{TITLES.SETS}: {item.sets} | {TITLES.REPETITIONS}: {item.repetitions} | {TITLES.REST}: {item.rest.quantity}{item.rest.unit} | {TITLES.CADENCY}: {item.cadency}</Text>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </Card>
-              )}
-              keyExtractor={item => item.exercise._id+item.sets}
-            />
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={(props) => this._setRoutinesModalVisible(!this.state.routinesModalVisible)}
-            >
-              <Text style={styles.textStyle}>{BUTTONS.CLOSE}</Text>
-            </Pressable>
-          </Container>
+        <Modal size='full' isOpen={this.state.routinesModalVisible} onClose={() => this.setState({ routinesModalVisible: false })}>
+          <Modal.Content >
+            <Modal.CloseButton />
+            <Modal.Header><Heading size='md' >{this.state.routineName}</Heading></Modal.Header>
+            <Modal.Body>
+              {this.state.exercises.map((item, index) => {
+                return (
+                  <Box key={index} border={0.5} my={1} borderRadius='md'>
+                    <Pressable onPress={() => alert(item.exercise.name)} bg='primary.500'>
+                      <Box px={4} pt={4} bg='primary.700'>
+                        <Center pb={3}>
+                          <Heading size="sm" color='white'>{item.exercise.name} {item.superset && TITLES.SUPERSET}</Heading>
+                        </Center>
+                      </Box>
+                      <Box px={4} pt={4}>
+                        <AspectRatio w='100%' ratio={16 / 9}>
+                          <Image
+                            source={{
+                              uri: builder.image(item.exercise.image).url(),
+                            }}
+                            alt={item.exercise.name}
+                          />
+                        </AspectRatio>
+                      </Box>
+                      <Box pt={2} pb={2} >
+                        <Center>
+                          <Text color='grey'>{TITLES.SETS}: {item.sets} | {TITLES.REPETITIONS}: {item.repetitions} | {TITLES.REST}: {item.rest.quantity}{item.rest.unit} | {TITLES.CADENCY}: {item.cadency}</Text>
+                        </Center>
+                      </Box>
+                    </Pressable>
+                  </Box>
+                );
+              })}
+            </Modal.Body>
+          </Modal.Content>
         </Modal>
-      </Container>
+      </Box>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-    height: 200,
-    width: null
-  },
-  imageModal: {
-    height: 250,
-    width: null,
-    flex: 1
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    margin: 15,
-    elevation: 2
-  },
-  buttonClose: {
-    backgroundColor: colors.color_primary_500,
-  },
-  textStyle: {
-    color: colors.white,
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-});
 
 export default function (props) {
   const navigation = useNavigation();

@@ -1,9 +1,8 @@
 import 'react-native-gesture-handler';
 import * as React from 'react';
-import getTheme from './native-base-theme/components';
-import commonColor from './native-base-theme/variables/commonColor';
 import {
-  StyleProvider,
+  NativeBaseProvider,
+  extendTheme,
 } from 'native-base';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,14 +18,26 @@ import ProfileScreen from './src/screens/profile/index'
 import SigninScreen from './src/screens/signin/index'
 
 import {SCREENS} from './src/config/constants'
+import {colors} from './src/config/styles'
 
 const Drawer = createDrawerNavigator();
 
+const theme = extendTheme({ colors: colors });
+
+const config = {
+  dependencies: {
+    // For Expo projects (Bare or managed workflow)
+    'linear-gradient': require('expo-linear-gradient').LinearGradient,
+    // For non expo projects
+    // 'linear-gradient': require('react-native-linear-gradient').default,
+  },
+};
+
 export default function App() {
   return (
-    <StyleProvider style={getTheme(commonColor)}>
-      <NavigationContainer >
-        <Drawer.Navigator initialRouteName={SCREENS.LOGIN} drawerContent={props => <DrawerContent {...props}/>}>
+    <NativeBaseProvider config={config} theme={theme}>
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName={SCREENS.HOME} drawerContentOptions={SCREENS} drawerContent={props => <DrawerContent {...props}/>}>
           <Drawer.Screen name={SCREENS.HOME} component={HomeScreen} />
           <Drawer.Screen name={SCREENS.LOGIN} component={LoginScreen} />
           <Drawer.Screen name={SCREENS.ABOUT} component={AboutScreen} />
@@ -38,7 +49,7 @@ export default function App() {
           <Drawer.Screen name={SCREENS.SIGNIN} component={SigninScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
-    </StyleProvider>
+    </NativeBaseProvider>
 
   );
 }

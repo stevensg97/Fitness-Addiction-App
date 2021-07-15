@@ -50,6 +50,7 @@ export const ICONS = {
   MD_CALL: 'md-call',
   MD_MAIL: 'md-mail',
   MD_PIN: 'md-pin',
+  MD_ARROW_BACK: 'md-arrow-back',
   MD_HOME_OUTLINE: 'md-home-outline',
   MD_PERSON_OUTLINE: 'md-person-outline',
   MD_LIST_OUTLINE: 'md-list-outline',
@@ -58,6 +59,7 @@ export const ICONS = {
   MD_CHATBUBBLES_OUTLINE: 'md-chatbubbles-outline',
   MD_INFOMATION_CIRCLE_OUTLINE: 'md-information-circle-outline',
   MD_LOG_OUT_OUTLINE: 'md-log-out-outline',
+  MD_CLIPBOARD_OUTLINE: 'md-clipboard-outline',
   LOGO_FACEBOOK: 'logo-facebook',
   LOGO_INSTAGRAM: 'logo-instagram',
 }
@@ -84,7 +86,7 @@ export const SCREENS = {
   SIGNIN: 'Signin',
 }
 
-export const DRAWER_OPTIONS = [
+/* export const DRAWER_OPTIONS = [
 
     {screen: SCREENS.HOME, name: 'Inicio', icon: ICONS.MD_HOME_OUTLINE},
     {screen: SCREENS.PROFILE, name: 'Perfil', icon: ICONS.MD_PERSON_OUTLINE},
@@ -94,6 +96,18 @@ export const DRAWER_OPTIONS = [
     {screen: SCREENS.CONTACT, name: 'Contacto', icon: ICONS.MD_CHATBUBBLES_OUTLINE},
     {screen: SCREENS.ABOUT, name: 'Acerca de', icon: ICONS.MD_INFOMATION_CIRCLE_OUTLINE},
     {screen: SCREENS.LOGIN, name: 'Cerrar Sesión', icon: ICONS.MD_LOG_OUT_OUTLINE}
+] */
+
+export const DRAWER_OPTIONS = [
+  // [SCREEN, TITLE, ICON]
+  [SCREENS.HOME, 'Inicio', ICONS.MD_HOME_OUTLINE],
+  [SCREENS.PROFILE, 'Perfil', ICONS.MD_PERSON_OUTLINE],
+  [SCREENS.MENU, 'Menú', ICONS.MD_LIST_OUTLINE],
+  [SCREENS.STORE, 'Tienda', ICONS.MD_CART_OUTLINE],
+  [SCREENS.CONFIGURATIONS, 'Configuraciones', ICONS.MD_COG_OUTLINE],
+  [SCREENS.CONTACT, 'Contacto', ICONS.MD_CHATBUBBLES_OUTLINE],
+  [SCREENS.ABOUT, 'Acerca de', ICONS.MD_INFOMATION_CIRCLE_OUTLINE],
+  [SCREENS.LOGIN, 'Cerrar Sesión', ICONS.MD_LOG_OUT_OUTLINE]
 ]
 
 export const PLACEHOLDERS = {
@@ -112,7 +126,9 @@ export const TITLES = {
   FITNESS_ADDICTION: 'Fitness Addiction',
   HOME: 'Inicio',
   ROUTINES: 'Rutinas',
-  SETS: 'Series',
+  CONTACT: 'Contacto',
+  PROFILE: 'Perfil',
+  SETS: 'Sets',
   REPETITIONS: 'Reps',
   CADENCY: 'Cad',
   REST: 'Desc',
@@ -125,7 +141,12 @@ export const TITLES = {
   PHONE_NUMBER: 'Teléfono',
   EMAIL: 'Correo electrónico',
   LOCATION: 'Ubicación',
-  SOCIAL_NETWORKS: 'Redes sociales'
+  SOCIAL_NETWORKS: 'Redes sociales',
+  PROFILE: 'Perfil',
+  INFORMATION: 'Información',
+  BODY_MEASURES: 'Medidas corporales',
+  ACCOUNT: 'Cuenta'
+
 }
 
 export const VALUES = {

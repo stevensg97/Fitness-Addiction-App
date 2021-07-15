@@ -1,112 +1,115 @@
-import React, { Component } from 'react';
-import AppLoading from 'expo-app-loading';
-import { StyleSheet, View } from 'react-native';
-import {
-  Container,
-  Left,
-  Button,
-  Text,
-  Header,
-  Tab,
-  Tabs,
-  Title,
-  DefaultTabBar,
-  TabHeading,
-  Icon,
-  Body
-} from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../../config/styles';
-import { useNavigation } from '@react-navigation/native';
-import RoutinesTab from './RoutinesTab';
-import HomeTab from './HomeTab';
-import { ICONS, TITLES } from '../../config/constants';
 
-const renderTabBar = (props) => {
-  props.tabStyle = Object.create(props.tabStyle);
-  return <DefaultTabBar {...props} />;
-};
+import React, { Component } from 'react';
+import { Dimensions, Animated, Pressable } from 'react-native';
+import { TabView, SceneMap } from 'react-native-tab-view';
+import { useNavigation } from '@react-navigation/native';
+import { Box, HStack, HamburgerIcon, Center, Heading, Divider, StatusBar, Icon } from 'native-base';
+import {
+    Ionicons
+} from '@expo/vector-icons';
+import { colors } from '../../config/styles';
+import { ICONS } from '../../config/constants'
+import HomeTab from './HomeTab';
+import RoutinesTab from './RoutinesTab';
+
+const initialLayout = { width: Dimensions.get('window').width };
 
 class HomeScreen extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      isReady: false,
-    };
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
-    });
-    this.setState({ isReady: true });
-  }
-
-  render() {
-    const { navigation } = this.props;
-    if (!this.state.isReady) {
-      return <AppLoading />;
+    constructor(props) {
+        super(props);
+        this.state = {
+            isReady: false,
+            index: 0,
+            routes: [
+                { key: 'home', title: 'Inicio', iconSelected: ICONS.MD_HOME, icon: ICONS.MD_HOME_OUTLINE },
+                { key: 'routines', title: 'Rutinas', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD_OUTLINE },
+            ]
+        };
     }
 
-    return (
-      <View style={styles.container}>
-        <Container>
-          <Header hasTabs>
-            <Left>
-              <Button transparent onPress={() => navigation.openDrawer()}>
-                <Icon name={ICONS.MD_MENU} />
-              </Button>
-            </Left>
-            <Body>
-              <Title>{TITLES.FITNESS_ADDICTION}</Title>
-            </Body>
-          </Header>
-          <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_HOME} /><Text>{TITLES.HOME}</Text></TabHeading>}>
-              <HomeTab />
-            </Tab>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_CLIPBOARD} /><Text>{TITLES.ROUTINES}</Text></TabHeading>}>
-              <RoutinesTab />
-            </Tab>
-          </Tabs>
-        </Container>
-      </View>
-    );
-  }
+    componentDidMount() {
+        this.setState({ isReady: true });
+    }
+
+    _handleIndexChange = (index) => this.setState({ index });
+
+    _renderTabBar = (props) => {
+        const inputRange = props.navigationState.routes.map((x, i) => i);
+
+        return (
+            <Box flexDirection="row">
+                {props.navigationState.routes.map((route, i) => {
+                    const opacity = props.position.interpolate({
+                        inputRange,
+                        outputRange: inputRange.map((inputIndex) =>
+                            inputIndex === i ? 1 : 0.5
+                        ),
+                    });
+
+                    return (
+                        <Box
+                            flex={1}
+                            alignItems='center'
+                            p={4}
+                            key={route.key}
+                            bg='primary.500'
+                        >
+                            <Pressable
+                                onPress={() => this.setState({ index: i })}>
+                                <HStack space={1}>
+                                    {this.state.index == i ? <Icon size='sm' color='white' as={<Ionicons name={route.iconSelected} />} /> 
+                                    : <Icon size='sm' color='ligthwhite' as={<Ionicons name={route.icon} />} />}
+                                    <Animated.Text style={{ opacity, color: colors.white, fontSize: 16 }}>{route.title}</Animated.Text>
+                                </HStack>
+                            </Pressable>
+                        </Box>
+
+
+                    );
+                })}
+            </Box>
+        );
+    };
+
+    _renderScene = SceneMap({
+        home: HomeTab, //HomeTab
+        routines: RoutinesTab, //RoutinesTab
+    });
+
+    render() {
+        const { navigation } = this.props;
+
+        return (
+            <Box flex={1}>
+                <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
+                <HStack alignItems="center" py={4} bg='primary.500'>
+                    <Pressable onPress={() => navigation.toggleDrawer()} position="absolute" ml={2} zIndex={1}>
+                        <HamburgerIcon ml={2} size="md" color='white' />
+                    </Pressable>
+                    <Center flex={1} >
+                        <Heading size="md" color='white'>{'Fitness Addiction'}</Heading>
+                    </Center>
+                </HStack>
+                <Divider />
+                <TabView
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    onIndexChange={this._handleIndexChange}
+                    renderTabBar={this._renderTabBar}
+                    initialLayout={initialLayout}
+                    style={{ marginTop: StatusBar.currentHeight }}
+                />
+            </Box>
+
+        );
+    }
+
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-  button: {
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  text: {
-    backgroundColor: 'transparent',
-    fontSize: 15,
-    color: '#fff',
-  },
-});
-
 export default function (props) {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  return <HomeScreen {...props} navigation={navigation} />;
+    return <HomeScreen {...props} navigation={navigation} />;
 }

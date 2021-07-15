@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { FlatList, LogBox, Image, Alert, StyleSheet } from 'react-native';
+import { LogBox, Alert, StyleSheet } from 'react-native';
 import {
+  Box,
+  VStack,
+  HStack,
+  Divider,
+  FlatList,
+  Image,
+  Center,
+  AspectRatio,
+  Heading,
   Text,
-  Left,
-  Body,
-  Container,
-  Card,
-  CardItem,
-  Right,
   Button
 } from 'native-base';
 import {
@@ -23,6 +26,7 @@ import client from '../../utils/client';
 import imageUrlBuilder from '@sanity/image-url';
 import moment from "moment";
 import 'moment/locale/es.js';
+import { colors } from '../../config/styles';
 
 const builder = imageUrlBuilder(client);
 
@@ -42,7 +46,7 @@ class HomeTab extends Component {
     await this._getAds();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     //this._getAds(); Genera demasiados request
   }
 
@@ -70,39 +74,48 @@ class HomeTab extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <Container>
+      <Box>
         <FlatList
           data={this.state.ads}
           renderItem={({ item }) => (
-            <Card>
-              <CardItem cardBody>
-                <Image source={{ uri: builder.image(item.image).url() }} style={styles.image} />
-              </CardItem>
-              <CardItem>
-                <Left>
-                  <Body>
-                    <Text>{item.name}</Text>
-                    <Text note>{item.description}</Text>
-                  </Body>
-                </Left>
+            <Box border={0.5} my={1} borderRadius='md' >
+              <VStack divider={<Divider />} bg='white'>
+                <Box px={4} pt={4} bg='primary.700'>
+                  <Heading size="sm" color='white' pb={3}>{item.name}</Heading>
+                </Box>
+                <AspectRatio w="100%" ratio={16 / 9}>
+                  <Image
+                    source={{
+                      uri: builder.image(item.image).url(),
+                    }}
+                    alt="Alternate Text"
+                  />
+                </AspectRatio>
+                <Box px={4}>
+                  <Text>{item.description}</Text>
+                </Box>
                 {item.type == AD_TYPES.EVENT &&
-                  <Right>
-                    <Body >
-                      <Left>
-                        <Text>{TITLES.DATE}: {moment(item.datetime).locale('es').format('D MMM YYYY')}</Text>
-                        <Text>{TITLES.TIME}: {moment(item.datetime).locale('es').format('h:mm a')}</Text>
-                        <Text>{TITLES.SPACE_AVAILABLE}: {item.people_limit - item.people.length}</Text>
-                      </Left>
-                    </Body>
-                    <Button rounded onPress={() => alert(item.people.length)} ><Text>{TITLES.REGISTER}</Text></Button>
-                  </Right>
+                  <Box px={4} pb={1}>
+                    <HStack space={20}>
+                      <VStack space={0}>
+                        <Text color='grey'>{TITLES.DATE}: {moment(item.datetime).locale('es').format('D MMM YYYY')}</Text>
+                        <Text color='grey'>{TITLES.TIME}: {moment(item.datetime).locale('es').format('h:mm a')}</Text>
+                        <Text color='grey'>{TITLES.SPACE_AVAILABLE}: {item.people_limit - item.people.length}</Text>
+                      </VStack>
+                      <Center>
+                        <Button size='sm' variant='solid' colorScheme='primary'>
+                          <Text color='white'>{TITLES.REGISTER}</Text>
+                        </Button>
+                      </Center>
+                    </HStack>
+                  </Box>
                 }
-              </CardItem>
-            </Card>
+              </VStack>
+            </Box>
           )}
           keyExtractor={item => item._id}
         />
-      </Container>
+      </Box>
     );
   }
 }

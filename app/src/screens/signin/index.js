@@ -186,7 +186,7 @@ class SigninScreen extends Component {
 
     return (
       <LinearGradient
-        colors={[colors.color_primary_500, colors.black]}
+        colors={[colors.primary[500], colors.black]}
         style={styles.gradientContainer}
         start={{ x: VALUES.CERO, y: VALUES.CERO }}
         end={{ x: VALUES.CERO, y: VALUES.UNO }}
@@ -316,7 +316,7 @@ export default function (props) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: colors.color_primary_500,
+    backgroundColor: colors.primary[500],
     borderRadius: 15,
     paddingVertical: 15,
     margin: 5
