@@ -41,7 +41,7 @@ class AboutScreen extends Component {
 
     return (
       <Box flex={1}>
-        <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
+        <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />
         <HStack alignItems="center" py={4} bg='primary.500'>
           <Pressable _pressed={{ opacity: 0.5 }} onPress={() => navigation.goBack()} position="absolute" ml={2} zIndex={1}>
             <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />

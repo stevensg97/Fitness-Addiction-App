@@ -58,7 +58,7 @@ class HomeScreen extends Component {
                             <Pressable
                                 onPress={() => this.setState({ index: i })}>
                                 <HStack space={1}>
-                                    {this.state.index == i ? <Icon size='sm' color='white' as={<Ionicons name={route.iconSelected} />} /> 
+                                    {this.state.index == i ? <Icon size='sm' color='white' as={<Ionicons name={route.iconSelected} />} />
                                     : <Icon size='sm' color='ligthwhite' as={<Ionicons name={route.icon} />} />}
                                     <Animated.Text style={{ opacity, color: colors.white, fontSize: 16 }}>{route.title}</Animated.Text>
                                 </HStack>
@@ -82,9 +82,9 @@ class HomeScreen extends Component {
 
         return (
             <Box flex={1}>
-                <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
+                <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />
                 <HStack alignItems="center" py={4} bg='primary.500'>
-                    <Pressable onPress={() => navigation.toggleDrawer()} position="absolute" ml={2} zIndex={1}>
+                    <Pressable onPress={() => navigation.toggleDrawer()} _pressed={{ opacity: 0.5 }} position="absolute" ml={2} zIndex={1}>
                         <HamburgerIcon ml={2} size="md" color='white' />
                     </Pressable>
                     <Center flex={1} >

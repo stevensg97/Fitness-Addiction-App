@@ -14,6 +14,11 @@ export default {
       type: 'image'
     },
     {
+      title: 'Horario',
+      name: 'schedule',
+      type: 'image'
+    },
+    {
       title: 'Misión',
       name: 'mission',
       type: 'text'

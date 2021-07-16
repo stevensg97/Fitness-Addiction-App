@@ -13,7 +13,7 @@ import AboutScreen from './src/screens/about/index'
 import StoreScreen from './src/screens/store/index'
 import ConfigurationsScreen from './src/screens/configurations/index'
 import ContactScreen from './src/screens/contact/index'
-import MenuScreen from './src/screens/menu/index'
+import ScheduleScreen from './src/screens/schedule/index'
 import ProfileScreen from './src/screens/profile/index'
 import SigninScreen from './src/screens/signin/index'
 
@@ -44,7 +44,7 @@ export default function App() {
           <Drawer.Screen name={SCREENS.STORE} component={StoreScreen} />
           <Drawer.Screen name={SCREENS.CONFIGURATIONS} component={ConfigurationsScreen} />
           <Drawer.Screen name={SCREENS.CONTACT} component={ContactScreen} />
-          <Drawer.Screen name={SCREENS.MENU} component={MenuScreen} />
+          <Drawer.Screen name={SCREENS.SCHEDULE} component={ScheduleScreen} />
           <Drawer.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
           <Drawer.Screen name={SCREENS.SIGNIN} component={SigninScreen} />
         </Drawer.Navigator>

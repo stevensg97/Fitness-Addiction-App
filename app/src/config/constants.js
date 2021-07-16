@@ -33,7 +33,7 @@ export const ICONS = {
   MD_APPS: 'md-apps',
   MD_TRENDING_UP: 'md-trending-up',
   MD_CAMERA: 'md-camera',
-  MD_MENU: 'md-menu',
+  MD_TIME: 'md-time',
   MD_CLIPBOARD: 'md-clipboard',
   MD_PAPER: 'md-paper',
   MD_REFRESH: 'md-refresh',
@@ -61,6 +61,7 @@ export const ICONS = {
   MD_INFOMATION_CIRCLE_OUTLINE: 'md-information-circle-outline',
   MD_LOG_OUT_OUTLINE: 'md-log-out-outline',
   MD_CLIPBOARD_OUTLINE: 'md-clipboard-outline',
+  MD_TIME_OUTLINE: 'md-time-outline',
   LOGO_FACEBOOK: 'logo-facebook',
   LOGO_INSTAGRAM: 'logo-instagram',
 }
@@ -78,7 +79,7 @@ export const AD_TYPES = {
 export const SCREENS = {
   HOME: 'Home',
   PROFILE: 'Profile',
-  MENU: 'Menu',
+  SCHEDULE: 'Schedule',
   STORE: 'Store',
   CONFIGURATIONS: 'Configurations',
   CONTACT: 'Contact',
@@ -87,25 +88,13 @@ export const SCREENS = {
   SIGNIN: 'Signin',
 }
 
-/* export const DRAWER_OPTIONS = [
-
-    {screen: SCREENS.HOME, name: 'Inicio', icon: ICONS.MD_HOME_OUTLINE},
-    {screen: SCREENS.PROFILE, name: 'Perfil', icon: ICONS.MD_PERSON_OUTLINE},
-    {screen: SCREENS.MENU, name: 'Menú', icon: ICONS.MD_LIST_OUTLINE},
-    {screen: SCREENS.STORE, name: 'Tienda', icon: ICONS.MD_CART_OUTLINE},
-    {screen: SCREENS.CONFIGURATIONS, name: 'Configuraciones', icon: ICONS.MD_COG_OUTLINE},
-    {screen: SCREENS.CONTACT, name: 'Contacto', icon: ICONS.MD_CHATBUBBLES_OUTLINE},
-    {screen: SCREENS.ABOUT, name: 'Acerca de', icon: ICONS.MD_INFOMATION_CIRCLE_OUTLINE},
-    {screen: SCREENS.LOGIN, name: 'Cerrar Sesión', icon: ICONS.MD_LOG_OUT_OUTLINE}
-] */
-
 export const DRAWER_OPTIONS = [
   // [SCREEN, TITLE, ICON]
   [SCREENS.HOME, 'Inicio', ICONS.MD_HOME_OUTLINE],
   [SCREENS.PROFILE, 'Perfil', ICONS.MD_PERSON_OUTLINE],
-  [SCREENS.MENU, 'Menú', ICONS.MD_LIST_OUTLINE],
+  [SCREENS.SCHEDULE, 'Horario', ICONS.MD_TIME_OUTLINE],
   [SCREENS.STORE, 'Tienda', ICONS.MD_CART_OUTLINE],
-  [SCREENS.CONFIGURATIONS, 'Configuraciones', ICONS.MD_COG_OUTLINE],
+  //[SCREENS.CONFIGURATIONS, 'Configuraciones', ICONS.MD_COG_OUTLINE],
   [SCREENS.CONTACT, 'Contacto', ICONS.MD_CHATBUBBLES_OUTLINE],
   [SCREENS.ABOUT, 'Acerca de', ICONS.MD_INFOMATION_CIRCLE_OUTLINE],
   [SCREENS.LOGIN, 'Cerrar Sesión', ICONS.MD_LOG_OUT_OUTLINE]
@@ -135,7 +124,7 @@ export const TITLES = {
   HOME: 'Inicio',
   ROUTINES: 'Rutinas',
   PROFILE: 'Perfil',
-  MENU: 'Menú',
+  SCHEDULE: 'Horario',
   STORE: 'Store',
   CONFIGURATIONS: 'Configuraciones',
   CONTACT: 'Contacto',
