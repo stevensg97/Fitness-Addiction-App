@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LogBox, Image, Alert, StyleSheet, Pressable } from 'react-native';
+import { LogBox, Image, Alert } from 'react-native';
 import {
   Text,
   Heading,
@@ -9,7 +9,8 @@ import {
   HStack,
   Box,
   Center,
-  Modal
+  Modal,
+  Pressable
 } from 'native-base';
 import {
   SCREENS,
@@ -93,7 +94,7 @@ class RoutinesTab extends Component {
                 <Box px={4} pt={4} bg='primary.700'>
                   <Center pb={1}>
                     <Heading size="sm" color='white'>{item.name}</Heading>
-                    <Text color='ligthgrey'>{item.type}</Text>
+                    <Text color='grey'>{item.type}</Text>
                   </Center>
                 </Box>
                 <AspectRatio w="100%" ratio={16 / 9}>
@@ -120,7 +121,7 @@ class RoutinesTab extends Component {
               {this.state.exercises.map((item, index) => {
                 return (
                   <Box key={index} border={0.5} my={1} borderRadius='md'>
-                    <Pressable onPress={() => alert(item.exercise.name)} bg='primary.500'>
+                    <Pressable onPress={() => alert(item.exercise.name)} bg='white'>
                       <Box px={4} pt={4} bg='primary.700'>
                         <Center pb={3}>
                           <Heading size="sm" color='white'>{item.exercise.name} {item.superset && TITLES.SUPERSET}</Heading>

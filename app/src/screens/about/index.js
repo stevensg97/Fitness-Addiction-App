@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
-import AppLoading from 'expo-app-loading';
-import { StyleSheet, View } from 'react-native';
+import { Linking } from 'react-native';
 import {
-  Container,
-  Left,
-  Button,
-  Text,
-  Header,
-  Tab,
-  Tabs,
-  Title,
-  DefaultTabBar,
-  TabHeading,
+  Box,
+  StatusBar,
+  HStack,
+  Pressable,
   Icon,
-  Body
+  Center,
+  Heading,
+  Divider,
+  Image,
+  Text,
+  Button,
+  VStack
 } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  Ionicons
+} from '@expo/vector-icons';
 import { colors } from '../../config/styles';
 import { useNavigation } from '@react-navigation/native';
 import { ICONS, TITLES } from '../../config/constants';
-
-const renderTabBar = (props) => {
-  props.tabStyle = Object.create(props.tabStyle);
-  return <DefaultTabBar {...props} />;
-};
+import IconLogo from '../../assets/logo.png';
+import IconPrelabs from '../../assets/PreLabs.png';
 
 class AboutScreen extends Component {
 
@@ -36,68 +33,56 @@ class AboutScreen extends Component {
   }
 
   async componentDidMount() {
-    /* await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
-    }); */
     this.setState({ isReady: true });
   }
 
   render() {
     const { navigation } = this.props;
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
 
     return (
-      <View style={styles.container}>
-        <Container>
-          <Header hasTabs>
-            <Left>
-              <Button transparent onPress={() => navigation.openDrawer()}>
-                <Icon name={ICONS.MD_MENU} />
-              </Button>
-            </Left>
-            <Body>
-              <Title>{TITLES.FITNESS_ADDICTION}</Title>
-            </Body>
-          </Header>
-          <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_INFOMATION_CIRCLE} /><Text>Acerca de</Text></TabHeading>} disabled>
-            </Tab>
-          </Tabs>
-        </Container>
-      </View>
+      <Box flex={1}>
+        <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
+        <HStack alignItems="center" py={4} bg='primary.500'>
+          <Pressable _pressed={{ opacity: 0.5 }} onPress={() => navigation.goBack()} position="absolute" ml={2} zIndex={1}>
+            <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
+          </Pressable>
+          <Center flex={1} >
+            <Heading size="md" color='white'>{TITLES.ABOUT}</Heading>
+          </Center>
+        </HStack>
+        <Divider />
+        <VStack flex={1} >
+          <Divider size={3} />
+          <Center>
+            <Text bold fontSize='2xl'>Fitness Addiction App</Text>
+            <Image
+              source={IconLogo}
+              alt='Logo'
+              height={150}
+              width={150}
+            />
+            <Text bold fontSize='xl'>Versión</Text>
+            <Text bold fontSize='lg'>1.0.1</Text>
+          </Center>
+          <Divider size={3} />
+          <Center>
+            <Text bold fontSize='2xl' >Desarrollado por</Text>
+            <Image
+              source={IconPrelabs}
+              alt='Logo'
+              height={150}
+              width={150}
+            />
+            <Divider size={3} />
+            <Button colorScheme="info" w='100%' onPress={() => { Linking.openURL('tel:' + '84352627') }}>Contáctanos</Button>
+            <Divider size={3} />
+          </Center>
+
+        </VStack>
+      </Box>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-  button: {
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  text: {
-    backgroundColor: 'transparent',
-    fontSize: 15,
-    color: '#fff',
-  },
-});
 
 export default function (props) {
   const navigation = useNavigation();

@@ -51,6 +51,7 @@ export const ICONS = {
   MD_MAIL: 'md-mail',
   MD_PIN: 'md-pin',
   MD_ARROW_BACK: 'md-arrow-back',
+  MD_CHECKMARK: 'md-checkmark',
   MD_HOME_OUTLINE: 'md-home-outline',
   MD_PERSON_OUTLINE: 'md-person-outline',
   MD_LIST_OUTLINE: 'md-list-outline',
@@ -119,15 +120,27 @@ export const PLACEHOLDERS = {
   CHECK_PASSWORD: 'Verificar contraseña',
   PHONE_NUMBER: 'Teléfono',
   HEIGHT: 'Altura (cm)',
-  WEIGHT: 'Peso (kg)'
+  WEIGHT: 'Peso (kg)',
+  BMI: 'IMC',
+  MUSCLE_PERCENTAGE: 'Porcentaje muscular',
+  BODY_FAT_PERCENTAGE: 'Porcentaje de grasa',
+  BONE_PERCENTAGE: 'Porcentaje óseo',
+  SUBSCRIPTION: 'Suscripción',
+  CHANGE_PASSWORD: 'Cambiar contraseña',
+  DELETE_ACCOUNT: 'Borrar cuenta'
 }
 
 export const TITLES = {
   FITNESS_ADDICTION: 'Fitness Addiction',
   HOME: 'Inicio',
   ROUTINES: 'Rutinas',
-  CONTACT: 'Contacto',
   PROFILE: 'Perfil',
+  MENU: 'Menú',
+  STORE: 'Store',
+  CONFIGURATIONS: 'Configuraciones',
+  CONTACT: 'Contacto',
+  ABOUT: 'Acerca de',
+  LOGOUT: 'Cerrar Sesión',
   SETS: 'Sets',
   REPETITIONS: 'Reps',
   CADENCY: 'Cad',
@@ -142,9 +155,8 @@ export const TITLES = {
   EMAIL: 'Correo electrónico',
   LOCATION: 'Ubicación',
   SOCIAL_NETWORKS: 'Redes sociales',
-  PROFILE: 'Perfil',
   INFORMATION: 'Información',
-  BODY_MEASURES: 'Medidas corporales',
+  BODY_MEASURES: 'Medidas Corporales',
   ACCOUNT: 'Cuenta'
 
 }

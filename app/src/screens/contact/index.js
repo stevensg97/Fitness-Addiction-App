@@ -71,18 +71,11 @@ class ContactScreen extends Component {
       <Box flex={1}>
         <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
         <HStack alignItems="center" py={4} bg='primary.500'>
-          <Pressable onPress={() => navigation.goBack()} position="absolute" ml={2} zIndex={1}>
+          <Pressable _pressed={{ opacity: 0.5 }} onPress={() => navigation.goBack()} position="absolute" ml={2} zIndex={1}>
             <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
           </Pressable>
           <Center flex={1} >
-            <HStack space={1}>
-              <Center>
-                <Icon size='sm' color='white' as={<Ionicons name={ICONS.MD_CHATBUBBLES} />} />
-              </Center>
-              <Center>
-                <Heading size="md" color='white'>{TITLES.CONTACT}</Heading>
-              </Center>
-            </HStack>
+            <Heading size="md" color='white'>{TITLES.CONTACT}</Heading>
           </Center>
         </HStack>
         <Divider />
@@ -91,7 +84,7 @@ class ContactScreen extends Component {
             <Box my={1} pt={5} >
               <VStack ml={5} space={4} >
                 <Heading size='md'>{TITLES.PHONE_NUMBER}</Heading>
-                <Pressable onPress={() => { Linking.openURL('tel:' + this.state.information.phone_number) }}>
+                <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL('tel:' + this.state.information.phone_number) }}>
                   <HStack space={1}>
                     <Icon size='sm' color='primary.700' as={<Ionicons name={ICONS.MD_CALL} />} />
                     <Text>{this.state.information.phone_number}</Text>
@@ -102,7 +95,7 @@ class ContactScreen extends Component {
             <Box >
               <VStack ml={5} space={4}>
                 <Heading size='md'>{TITLES.EMAIL}</Heading>
-                <Pressable onPress={() => { Linking.openURL('mailto:' + this.state.information.email) }}>
+                <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL('mailto:' + this.state.information.email) }}>
                   <HStack space={1}>
                     <Icon size='sm' color='primary.700' as={<Ionicons name={ICONS.MD_MAIL} />} />
                     <Text>{this.state.information.email}</Text>
@@ -113,7 +106,7 @@ class ContactScreen extends Component {
             <Box>
               <VStack ml={5} space={4}>
                 <Heading size='md'>{TITLES.LOCATION}</Heading>
-                <Pressable onPress={() => { Linking.openURL(this.state.information.location) }}>
+                <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.location) }}>
                   <HStack space={1}>
                     <Icon size='sm' color='primary.700' as={<Ionicons name={ICONS.MD_PIN} />} />
                     <Text>{this.state.information.location}</Text>
@@ -127,10 +120,11 @@ class ContactScreen extends Component {
                 <Center>
                   <Pressable>
                     <HStack space={4}>
-                      <Pressable onPress={() => { Linking.openURL(this.state.information.social_networks.facebook) }}>
+                      <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.facebook) }}>
                         <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_FACEBOOK} />} />
                       </Pressable>
-                      <Pressable onPress={() => { Linking.openURL(this.state.information.social_networks.instagram) }}>
+                      <Divider orientation='vertical'/>
+                      <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.instagram) }}>
                         <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_INSTAGRAM} />} />
                       </Pressable>
                     </HStack>

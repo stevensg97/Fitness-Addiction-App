@@ -2,8 +2,9 @@ export const colors = {
   white: '#fff',
   ligthwhite: 'rgba(255,255,255,0.5)',
   black: '#000',
-  grey: 'grey',
-  ligthgrey: 'rgba(155,155,155,0.8)',
+  grey: 'rgba(155,155,155,1)',
+  lightgray: 'rgba(155,155,155,0.8)',
+  coolgray: '#374151',
   transparent: 'transparent',
   placeholderColor: 'rgba(255,255,255,0.8)',
   inputColor: 'rgba(150,150,150,0.4)',
@@ -106,7 +107,7 @@ export const colors = {
 
 export const commonStyles = {
   buttonContainer: {
-    backgroundColor: colors.color_primary_500,
+    backgroundColor: colors.primary[500],
     borderRadius: 15,
     paddingVertical: 15,
     margin: 5

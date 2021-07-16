@@ -10,7 +10,11 @@ export const INFORMATION = `*[_type == 'information']{
     phone_number, email, location, social_networks
   }`
 
-export const USER = `*[_type == 'user']{
-    name, flname, slname, email, password, phone_number, subscription, measures
+export const USERS = `*[_type == 'user']{
+    _id, name, flname, slname, email, password, phone_number, measures, subscription{active, starting_date, ending_date, active, plan->{name}}
   }`
 
+export function USER(email) { return(`*[_type == 'user' && email.current == \'${email}\']{
+    _id, name, flname, slname, email, password, phone_number, measures, subscription{active, starting_date, ending_date, active, plan->{name}}
+  }`
+)}
