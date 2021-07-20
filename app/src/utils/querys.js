@@ -24,3 +24,15 @@ export function USER(email) {
   }`
   )
 }
+
+export const EXERCISES = `*[_type == 'exercise']{
+  _id, name, image, muscle->{name}
+}`
+
+
+export function WEIGHTS(email) {
+  return (`*[_type == 'user' && email.current == \'${email}\']{
+    weights->{weights[]{history, exercise->{name}}}
+  }`
+  )
+}

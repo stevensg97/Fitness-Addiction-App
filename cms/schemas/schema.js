@@ -7,6 +7,7 @@ import routine from './routine'
 import plan from './plan'
 import ad from './ad'
 import user from './user'
+import weight from './weight'
 
 export default createSchema({
   name: 'Schema',
@@ -17,6 +18,7 @@ export default createSchema({
     routine,
     plan,
     ad,
-    user
+    user,
+    weight
   ])
 })

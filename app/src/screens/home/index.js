@@ -11,6 +11,7 @@ import { colors } from '../../config/styles';
 import { ICONS } from '../../config/constants'
 import HomeTab from './HomeTab';
 import RoutinesTab from './RoutinesTab';
+import StatsTab from './StatsTab';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -24,6 +25,8 @@ class HomeScreen extends Component {
             routes: [
                 { key: 'home', title: 'Inicio', iconSelected: ICONS.MD_HOME, icon: ICONS.MD_HOME_OUTLINE },
                 { key: 'routines', title: 'Rutinas', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD_OUTLINE },
+                { key: 'stats', title: 'Historial', iconSelected: ICONS.MD_TRENDING_UP, icon: ICONS.MD_TRENDING_UP_OUTLINE },
+                //{ key: 'stats ', title: 'Stats', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD },
             ]
         };
     }
@@ -75,7 +78,21 @@ class HomeScreen extends Component {
     _renderScene = SceneMap({
         home: HomeTab, //HomeTab
         routines: RoutinesTab, //RoutinesTab
+        stats: StatsTab //StatsTab
     });
+
+    renderScene = ({ route }) => {
+      switch (route.key) {
+        case 'home':
+          return <HomeTab/>;
+        case 'routines':
+          return <RoutinesTab/>;
+          case 'stats':
+            return <StatsTab index={this.state.index}/>;
+        default:
+          return null;
+      }
+    };
 
     render() {
         const { navigation } = this.props;
@@ -94,10 +111,11 @@ class HomeScreen extends Component {
                 <Divider />
                 <TabView
                     navigationState={this.state}
-                    renderScene={this._renderScene}
+                    renderScene={this.renderScene}
                     onIndexChange={this._handleIndexChange}
                     renderTabBar={this._renderTabBar}
                     initialLayout={initialLayout}
+                    index={this.state.index}
                     style={{ marginTop: StatusBar.currentHeight }}
                 />
             </Box>
@@ -111,5 +129,5 @@ class HomeScreen extends Component {
 export default function (props) {
     const navigation = useNavigation();
 
-    return <HomeScreen {...props} navigation={navigation} />;
+    return <HomeScreen {...props} navigation={navigation}/>;
 }

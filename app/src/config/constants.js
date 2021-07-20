@@ -32,6 +32,7 @@ export const ICONS = {
   MD_ADD: 'md-add',
   MD_APPS: 'md-apps',
   MD_TRENDING_UP: 'md-trending-up',
+  MD_STATS: 'md-stats',
   MD_CAMERA: 'md-camera',
   MD_TIME: 'md-time',
   MD_CLIPBOARD: 'md-clipboard',
@@ -62,6 +63,8 @@ export const ICONS = {
   MD_LOG_OUT_OUTLINE: 'md-log-out-outline',
   MD_CLIPBOARD_OUTLINE: 'md-clipboard-outline',
   MD_TIME_OUTLINE: 'md-time-outline',
+  MD_STATS_OUTLINE: 'md-stats-outline',
+  MD_TRENDING_UP_OUTLINE: 'md-trending-up-outline',
   LOGO_FACEBOOK: 'logo-facebook',
   LOGO_INSTAGRAM: 'logo-instagram',
 }
