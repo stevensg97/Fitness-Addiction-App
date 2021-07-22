@@ -59,8 +59,8 @@ class SigninScreen extends Component {
       alert('Debe ingresar el segundo apellido');
       return;
     }
-    if (!this.state.emailString.trim()) {
-      alert('Debe ingresar el correo electrónico');
+    if (!this.state.emailString.trim() || this.state.emailString.indexOf('@') === -1) {
+      alert('Debe ingresar un correo electrónico válido');
       return;
     }
     if (!this.state.passwordString.trim()) {
@@ -92,18 +92,22 @@ class SigninScreen extends Component {
         email: { current: this.state.emailString },
         password: this.state.passwordString,
         phone_number: this.state.phoneNumberString,
-        admin: false
-      }
+        admin: false,
 
-      client.create(doc).then((res) => {
-        console.log('User was created document ID is ' + res._id)
-        Alert.alert(
-          SCREENS.SIGNIN,
-          ALERTS.SIGNIN_SUCCESS,
-          [{ text: BUTTONS.OK }],
-          { cancelable: false }
-        );
-      })
+      }
+      const patch = client.patch(doc._id).set({ history: {_id: doc._id + '-history'} })
+      client
+        .createIfNotExists(doc)
+        .then((res) => {
+          console.log('User was created document ID is ' + res._id)
+          Alert.alert(
+            SCREENS.SIGNIN,
+            ALERTS.SIGNIN_SUCCESS,
+            [{ text: BUTTONS.OK }],
+            { cancelable: false }
+          );
+        })
+        .then(() => client.createIfNotExists({ _id: doc._id + '-history', _type: 'history' }))
         .then(() => { this._resetState(); this.props.navigation.navigate(SCREENS.LOGIN); })
         .catch((err) => {
           console.error('Hubo un error al crear el usuario: ', err.message);
@@ -116,8 +120,6 @@ class SigninScreen extends Component {
           );
         })
     }
-
-
   };
 
   _onSigninTextChangedFName = event => {

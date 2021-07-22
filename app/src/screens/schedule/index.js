@@ -64,14 +64,6 @@ class ScheduleScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-    if (!this.state.isReady) {
-      return (
-        <Center flex={1}>
-          <Spinner color='primary.500' size='lg' />
-        </Center>
-      );
-    }
-
     return (
       <Box flex={1} >
         <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />

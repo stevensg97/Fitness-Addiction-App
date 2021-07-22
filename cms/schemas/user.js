@@ -43,12 +43,6 @@ export default {
       type: 'boolean',
     },
     {
-      title: 'Pesos',
-      name: 'weights',
-      type: 'reference',
-      to: [{ type: 'weight' }]
-    },
-    {
       title: 'Suscripción',
       name: 'subscription',
       type: 'object',

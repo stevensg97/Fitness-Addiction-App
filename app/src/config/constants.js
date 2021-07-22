@@ -128,7 +128,7 @@ export const TITLES = {
   ROUTINES: 'Rutinas',
   PROFILE: 'Perfil',
   SCHEDULE: 'Horario',
-  STORE: 'Store',
+  STORE: 'Tienda',
   CONFIGURATIONS: 'Configuraciones',
   CONTACT: 'Contacto',
   ABOUT: 'Acerca de',
@@ -149,7 +149,9 @@ export const TITLES = {
   SOCIAL_NETWORKS: 'Redes sociales',
   INFORMATION: 'Información',
   BODY_MEASURES: 'Medidas Corporales',
-  ACCOUNT: 'Cuenta'
+  ACCOUNT: 'Cuenta',
+  PRICE: 'Precio',
+  QUANTITY: 'Cantidad'
 
 }
 

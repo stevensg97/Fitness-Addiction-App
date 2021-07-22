@@ -120,14 +120,6 @@ class HomeTab extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-    height: 200,
-    width: null
-  },
-});
-
 export default function (props) {
   const navigation = useNavigation();
 

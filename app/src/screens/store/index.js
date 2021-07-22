@@ -1,103 +1,132 @@
 import React, { Component } from 'react';
-import AppLoading from 'expo-app-loading';
-import { StyleSheet, View } from 'react-native';
+import { LogBox, Alert, StyleSheet, ScrollView } from 'react-native';
 import {
-  Container,
-  Left,
-  Button,
+  Box,
+  VStack,
+  HStack,
+  Divider,
+  FlatList,
+  Image,
+  Center,
+  AspectRatio,
+  Heading,
   Text,
-  Header,
-  Tab,
-  Tabs,
-  Title,
-  DefaultTabBar,
-  TabHeading,
-  Icon,
-  Body
+  StatusBar,
+  Pressable,
+  Icon
 } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../../config/styles';
+import {
+  Ionicons
+} from '@expo/vector-icons';
+import {
+  SCREENS,
+  ALERTS,
+  BUTTONS,
+  TITLES,
+  ICONS
+} from '../../config/constants';
+import { PRODUCTS } from '../../utils/querys'
 import { useNavigation } from '@react-navigation/native';
-import { ICONS, TITLES } from '../../config/constants';
+import client from '../../utils/client';
+import imageUrlBuilder from '@sanity/image-url';
+import moment from "moment";
+import 'moment/locale/es.js';
+import { colors } from '../../config/styles';
 
-const renderTabBar = (props) => {
-  props.tabStyle = Object.create(props.tabStyle);
-  return <DefaultTabBar {...props} />;
-};
+const builder = imageUrlBuilder(client);
 
 class StoreScreen extends Component {
-
   constructor(props) {
+    LogBox.ignoreLogs(['Setting a timer']);
     super(props);
     this.state = {
-      isReady: false,
+      loading: false,
+      products: [],
     };
+    this.sale = [];
+    this.arrayholder = [];
   }
 
   async componentDidMount() {
-    /* await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
-    }); */
-    this.setState({ isReady: true });
+    await this._getAds();
   }
+
+  componentDidUpdate() {
+    //this._getAds(); Genera demasiados request
+  }
+
+  _getAds = () => {
+    client
+      .fetch(
+        PRODUCTS
+      )
+      .then(res => {
+        this.setState({ products: res });
+        this.arrayholder = this.state.products;
+        //console.log(this.arrayholder);
+      })
+      .catch(err => {
+        this.setState({ isLoading: false });
+        Alert.alert(
+          SCREENS.HOME,
+          ALERTS.FAILURE,
+          [{ text: BUTTONS.OK }],
+          { cancelable: false }
+        );
+      })
+  };
 
   render() {
     const { navigation } = this.props;
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
-
     return (
-      <View style={styles.container}>
-        <Container>
-          <Header hasTabs>
-            <Left>
-              <Button transparent onPress={() => navigation.openDrawer()}>
-                <Icon name={ICONS.MD_MENU} />
-              </Button>
-            </Left>
-            <Body>
-              <Title>{TITLES.FITNESS_ADDICTION}</Title>
-            </Body>
-          </Header>
-          <Tabs renderTabBar={renderTabBar} tabBgColor={colors.color_primary_500}>
-            <Tab heading={<TabHeading><Icon name={ICONS.MD_CART} /><Text>Tienda</Text></TabHeading>} disabled>
-            </Tab>
-          </Tabs>
-        </Container>
-      </View>
+      <Box flex={1}>
+        <StatusBar backgroundColor={colors.color_primary_600} barStyle="light-content" />
+        <HStack alignItems="center" py={4} bg='primary.500'>
+          <Pressable _pressed={{ opacity: 0.5 }} onPress={() => navigation.goBack()} position="absolute" ml={2} zIndex={1}>
+            <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
+          </Pressable>
+          <Center flex={1} >
+            <Heading size="md" color='white'>{TITLES.STORE}</Heading>
+          </Center>
+        </HStack>
+        <Divider />
+        <Box flex={1}>
+          <FlatList
+            data={this.state.products}
+            renderItem={({ item }) => (
+              <Box border={0.5} my={1} borderRadius='md' >
+                <VStack divider={<Divider />} bg='white'>
+                  <Box px={4} pt={4} bg='primary.700'>
+                    <Heading size="sm" color='white' pb={3}>{item.name}</Heading>
+                  </Box>
+                  <AspectRatio w="100%" ratio={16 / 9}>
+                    <Image
+                      source={{
+                        uri: builder.image(item.image).url(),
+                      }}
+                      alt="Alternate Text"
+                    />
+                  </AspectRatio>
+                  <Box px={4}>
+                    <Text>{item.description}</Text>
+                  </Box>
+                  <Box px={4} pb={1}>
+                    <HStack space={20}>
+                      <Text color='grey'>{TITLES.PRICE}: {'₡'}{item.price}</Text>
+                      <Text color='grey'>{TITLES.QUANTITY}: {item.quantity}</Text>
+                    </HStack>
+                  </Box>
+                </VStack>
+              </Box>
+            )}
+            keyExtractor={item => item._id}
+          />
+        </Box>
+      </Box>
+
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-  },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%',
-  },
-  button: {
-    padding: 15,
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  text: {
-    backgroundColor: 'transparent',
-    fontSize: 15,
-    color: '#fff',
-  },
-});
 
 export default function (props) {
   const navigation = useNavigation();
