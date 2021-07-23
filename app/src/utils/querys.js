@@ -29,6 +29,13 @@ export function USER(email) {
   )
 }
 
+export function LOGIN(email) {
+  return (`*[_type == 'user' && email.current == \'${email}\']{
+    password, name
+  }`
+  )
+}
+
 export const EXERCISES = `*[_type == 'exercise']{
   _id, name, image, muscle->{name}
 }`

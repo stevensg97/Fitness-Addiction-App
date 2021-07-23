@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import { LogBox } from 'react-native';
 import {
   Box,
@@ -34,6 +35,7 @@ class ProfileScreen extends Component {
     super(props);
     this.state = {
       isReady: false,
+      storedEmail: '',
       fname: '',
       flname: '',
       slname: '',
@@ -60,15 +62,37 @@ class ProfileScreen extends Component {
   }
 
   async componentDidMount() {
-    await this._getUserInformation();
+    await this._getRememberedEmail();
     this.setState({ isReady: true });
+
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._getRememberedEmail();
+    });
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
 
+  _getRememberedEmail = async () => {
+    try {
+      const email = await SecureStore.getItemAsync('EMAIL');
+      //console.log(email)
+      if (email !== null) {
+        this.state.storedEmail = email;
+        await this._getUserInformation();
+      }
+    } catch (error) {
+    }
+  };
+
+
   _getUserInformation = () => {
+    console.log(this.state.storedEmail)
     client
       .fetch(
-        USER('maiderr97@gmail.com')
+        USER(this.state.storedEmail)
       )
       .then(res => {
         this.setState({
@@ -98,12 +122,12 @@ class ProfileScreen extends Component {
       })
       .catch(err => {
         this.setState({ isReady: false, });
-        Alert.alert(
+        /* Alert.alert(
           SCREENS.CONTACT,
           ALERTS.FAILURE,
           [{ text: BUTTONS.OK }],
           { cancelable: false }
-        );
+        ); */
       })
   };
 
@@ -140,6 +164,7 @@ class ProfileScreen extends Component {
   _onProfileTextChangedHeight = event => {
     this.setState({
       bodyMeasures: {
+        ...this.state.bodyMeasures,
         height: event.nativeEvent.text
       }
     });
@@ -148,6 +173,7 @@ class ProfileScreen extends Component {
   _onProfileTextChangedWeight = event => {
     this.setState({
       bodyMeasures: {
+        ...this.state.bodyMeasures,
         weight: event.nativeEvent.text
       }
     });
@@ -155,7 +181,6 @@ class ProfileScreen extends Component {
 
   render() {
     const { navigation } = this.props;
-
     return (
       <Box flex={1}>
         <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />

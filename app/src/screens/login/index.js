@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import {
   View,
   Text,
   TextInput,
   Image,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  ActivityIndicator,
-  Alert,
   LogBox
 } from 'react-native';
+import {
+  Spinner,
+  StatusBar,
+  KeyboardAvoidingView,
+  Collapse,
+  IconButton,
+  CloseIcon,
+  Alert,
+} from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient';
 import IconLogo from '../../assets/logo.png';
 import { colors } from '../../config/styles';
 import {
   SCREENS,
   ALERTS,
+  ALERT_TITLES,
+  TYPE_ALERT,
   PLACEHOLDERS,
   BUTTONS,
   VALUES
 } from '../../config/constants';
+import { LOGIN } from '../../utils/querys'
 import client from '../../utils/client';
 
 import { useNavigation } from '@react-navigation/native';
@@ -28,48 +38,71 @@ import { useNavigation } from '@react-navigation/native';
 class LoginScreen extends Component {
 
   constructor(props) {
-    LogBox.ignoreLogs(['Setting a timer']);
+    LogBox.ignoreLogs(['Setting a timer', 'NativeBase:']);
     super(props);
     this.state = {
       emailString: '',
       passwordString: '',
-      isLoading: false
+      name: '',
+      isLoading: false,
+      alert: {
+        show: false,
+        title: '',
+        message: '',
+        type: ''
+      }
     };
+  }
+
+  async componentDidMount() {
+    const email = await this._getRememberedEmail();
+    const password = await this._getRememberedPassword();
+    if (email !== null && password !== null) {
+      this.setState({emailString: email, passwordString: password})
+      //this.props.navigation.navigate(SCREENS.HOME, { email });
+    }
+  }
+
+  _checkTextInputs = () => {
+    if (!this.state.emailString.trim() || !this.state.emailString.includes('@')) {
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_EMAIL, type: TYPE_ALERT.ERROR } });
+      return;
+    }
+    if (!this.state.passwordString.trim()) {
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_PASSWORD, type: TYPE_ALERT.ERROR } });
+      return;
+    }
+    //Checked Successfully
+    //Do whatever you want
+    return true
   }
 
   _onLoginPressed = () => {
     this.setState({ isLoading: true });
-    client
-      .fetch(
-        `*[_type == 'user' && email.current == \'${this.state.emailString}\' ]{password}`
-      )
-      .then(res => {
-        if (
-          this.state.passwordString == res[0].password
-        ) {
-          this.setState({ isLoading: false });
-          this.props.navigation.navigate(SCREENS.HOME);
-          this.setState({ emailString: '' });
-          this.setState({ passwordString: '' });
-        } else {
-          this.setState({ isLoading: false });
-          Alert.alert(
-            SCREENS.LOGIN,
-            ALERTS.ERROR_LOGIN,
-            [{ text: BUTTONS.OK }],
-            { cancelable: false }
-          );
-        }
-      })
-      .catch(err => {
-        this.setState({ isLoading: false });
-        Alert.alert(
-          SCREENS.LOGIN,
-          ALERTS.ERROR,
-          [{ text: BUTTONS.OK }],
-          { cancelable: false }
-        );
-      })
+    if (this._checkTextInputs()) {
+      client
+        .fetch(
+          LOGIN(this.state.emailString)
+        )
+        .then(res => {
+          //console.log(res)
+          if (
+            this.state.passwordString == res[0].password
+          ) {
+            this._rememberEmail();
+            this._rememberPassword();
+            this._rememberName(res[0].name);
+            this.props.navigation.navigate(SCREENS.HOME, {email: this.state.emailString});
+            this.setState({ emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
+          } else {
+            this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.LOGIN_NOT_MATCH, type: TYPE_ALERT.ERROR } });
+          }
+        })
+        .catch(err => {
+          this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.ERROR_ON_LOGIN, type: TYPE_ALERT.ERROR } });
+        })
+    }
+    this.setState({ isLoading: false });
   };
 
   _onLoginTextChangedEmail = event => {
@@ -88,11 +121,84 @@ class LoginScreen extends Component {
     this.props.navigation.navigate(SCREENS.SIGNIN);
   };
 
+  _rememberEmail = async () => {
+    try {
+      await SecureStore.setItemAsync('EMAIL', this.state.emailString);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  _getRememberedEmail = async () => {
+    try {
+      const email = await SecureStore.getItemAsync('EMAIL');
+      return email;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  _rememberPassword = async () => {
+    try {
+      await SecureStore.setItemAsync('PASSWORD', this.state.passwordString);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  _getRememberedPassword = async () => {
+    try {
+      const pasword = await SecureStore.getItemAsync('PASSWORD');
+      return pasword;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  _rememberName = async (name) => {
+    try {
+      await SecureStore.setItemAsync('NAME', name);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  _getRememberedName = async () => {
+    try {
+      const name = await SecureStore.getItemAsync('NAME');
+      return name;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   render() {
     const { navigation } = this.props;
 
     const spinner = this.state.isLoading ? (
-      <ActivityIndicator size='large' />
+      <Spinner size='large' color='white' />
+    ) : null;
+
+    const alert = this.state.alert.show ? (
+      <Alert
+        status={this.state.alert.type}
+        action={
+          <IconButton
+            icon={<CloseIcon size="xs" />}
+            onPress={() => this.setState({ alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } })}
+          />
+        }
+        actionProps={{
+          alignSelf: "center",
+        }}
+      >
+        <Alert.Icon />
+        <Alert.Title>{this.state.alert.title}</Alert.Title>
+        <Alert.Description>{this.state.alert.message}</Alert.Description>
+      </Alert>
     ) : null;
 
     return (
@@ -102,11 +208,15 @@ class LoginScreen extends Component {
         start={{ x: VALUES.CERO, y: VALUES.CERO }}
         end={{ x: VALUES.CERO, y: VALUES.UNO }}
       >
-        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+        <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />
+        <KeyboardAvoidingView style={styles.container}>
           <View style={styles.loginContainer}>
             <Image style={styles.logo} source={IconLogo} />
           </View>
           {spinner}
+          <Collapse isOpen={this.state.alert.show}>
+            {alert}
+          </Collapse>
           <View style={styles.containerForm}>
             <TextInput
               style={styles.input}
@@ -134,7 +244,7 @@ class LoginScreen extends Component {
             />
             <TouchableOpacity
               style={styles.buttonContainer}
-              onPress={() => navigation.navigate('Home')/* this._onLoginPressed */}
+              onPress={this._onLoginPressed/* navigation.navigate('Home') */}
             >
               <Text style={styles.buttonText}>{BUTTONS.LOGIN}</Text>
             </TouchableOpacity>
@@ -201,7 +311,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignSelf: 'center',
-    flex: 1,
+    flex: 0.5,
     height: '60%',
     resizeMode: 'contain',
     width: '60%',

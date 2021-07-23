@@ -1,13 +1,41 @@
 export const ALERTS = {
-  WRONG: "Wrong user or password.",
-  PASSWORD_NOT_MATCH: "Password does not match.",
-  SIGNIN_SUCCESS: 'User created successfully.',
+  // ----------- Login Alerts ----------- //
+  INVALID_EMAIL: 'Debe ingresar un correo electrónico válido.',
+  INVALID_PASSWORD: 'Debe ingresar la contraseña.',
+  LOGIN_NOT_MATCH: 'Correo electrónico o contraseña incorrecta.',
+  ERROR_ON_LOGIN: 'Algo salió mal. Revise su correo electrónico o intente más tarde.',
+  // ----------- SignIn Alerts ----------- //
+  EMAIL_ALREADY_EXIST: 'El correo ya se encuentra registrado.',
+  EMPTY_NAME: 'Debe ingresar el nombre.',
+  EMPTY_FLNAME: 'Debe ingresar el primer apellido.',
+  EMPTY_SLNAME: 'Debe ingresar el segundo apellido.',
+  EMPTY_EMAIL: 'Debe ingresar el correo electrónico válido.',
+  EMPTY_PASSWORD: 'Debe ingresar la contraseña.',
+  EMPTY_CHECK_PASSWORD: 'Debe verificar la contraseña.',
+  PASSWORD_DOES_NOT_MATCH: 'La contraseña no coincide.',
+  USER_CREATED_SUCCESSFULLY: 'Usuario registrado satisfactoriamente.',
+
   FAILURE: 'Algo salió mal, por favor inténtelo de nuevo.',
-  ERROR_LOGIN: 'Usuario o contraseña incorrecta.',
-  ERROR_SIGNIN: 'El correo ya se encuentra registrado.',
-  ERROR: 'Algo salió mal. Revise su email o intente más tarde.',
+
+
   ROUTINE_MODAL_CLOSED: 'Se ha cerrado la rutina.'
 }
+
+export const ALERT_TITLES = {
+  ERROR: '¡Error!',
+  SUCCESS: '¡Éxito!',
+  WARNING: '¡Cuidado!',
+  INFO: 'Información'
+}
+
+export const TYPE_ALERT = {
+  ERROR: 'error',
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  INFO: 'info'
+}
+
+
 
 export const BUTTONS = {
   LOGIN: 'Iniciar Sesión',
@@ -99,8 +127,7 @@ export const DRAWER_OPTIONS = [
   [SCREENS.STORE, 'Tienda', ICONS.MD_CART_OUTLINE],
   //[SCREENS.CONFIGURATIONS, 'Configuraciones', ICONS.MD_COG_OUTLINE],
   [SCREENS.CONTACT, 'Contacto', ICONS.MD_CHATBUBBLES_OUTLINE],
-  [SCREENS.ABOUT, 'Acerca de', ICONS.MD_INFOMATION_CIRCLE_OUTLINE],
-  [SCREENS.LOGIN, 'Cerrar Sesión', ICONS.MD_LOG_OUT_OUTLINE]
+  [SCREENS.ABOUT, 'Acerca de', ICONS.MD_INFOMATION_CIRCLE_OUTLINE]
 ]
 
 export const PLACEHOLDERS = {

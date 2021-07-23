@@ -5,24 +5,33 @@ import {
   TextInput,
   Image,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  ActivityIndicator,
-  Alert,
   LogBox
 } from 'react-native';
+import {
+  Spinner,
+  StatusBar,
+  KeyboardAvoidingView,
+  Collapse,
+  IconButton,
+  CloseIcon,
+  Alert,
+} from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient';
 import IconLogo from '../../assets/logo.png';
 import { colors } from '../../config/styles';
 import {
   SCREENS,
   ALERTS,
+  ALERT_TITLES,
+  TYPE_ALERT,
   PLACEHOLDERS,
   BUTTONS,
   VALUES
 } from '../../config/constants';
 import client from '../../utils/client';
-
+import moment from 'moment';
+import 'moment/locale/es.js';
 import { useNavigation } from '@react-navigation/native';
 
 class SigninScreen extends Component {
@@ -40,6 +49,12 @@ class SigninScreen extends Component {
       phoneNumberString: '',
       heightString: '',
       weightString: '',
+      alert: {
+        show: false,
+        title: '',
+        message: '',
+        type: ''
+      },
       isLoading: false
     };
   }
@@ -47,32 +62,32 @@ class SigninScreen extends Component {
   _checkTextInputs = () => {
     //Check for the Firstname TextInput
     if (!this.state.fnameString.trim()) {
-      alert('Debe ingresar el nombre');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_NAME, type: TYPE_ALERT.ERROR } });
       return;
     }
     //Check for the First Lastname TextInput
     if (!this.state.flnameString.trim()) {
-      alert('Debe ingresar el primer apellido');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_FLNAME, type: TYPE_ALERT.ERROR } });
       return;
     }
     if (!this.state.slnameString.trim()) {
-      alert('Debe ingresar el segundo apellido');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_SLNAME, type: TYPE_ALERT.ERROR } });
       return;
     }
-    if (!this.state.emailString.trim() || this.state.emailString.indexOf('@') === -1) {
-      alert('Debe ingresar un correo electrónico válido');
+    if (!this.state.emailString.trim() || !this.state.emailString.includes('@')) { // Revisar bien esta validación
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_EMAIL, type: TYPE_ALERT.ERROR } });
       return;
     }
     if (!this.state.passwordString.trim()) {
-      alert('Debe ingresar la contraseña');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_PASSWORD, type: TYPE_ALERT.ERROR } });
       return;
     }
     if (!this.state.checkPasswordString.trim()) {
-      alert('Debe verificar la contraseña');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMPTY_CHECK_PASSWORD, type: TYPE_ALERT.ERROR } });
       return;
     }
     if (this.state.passwordString != this.state.checkPasswordString) {
-      alert('La contraseña no coincide');
+      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.PASSWORD_DOES_NOT_MATCH, type: TYPE_ALERT.ERROR } });
       return;
     }
     //Checked Successfully
@@ -93,33 +108,39 @@ class SigninScreen extends Component {
         password: this.state.passwordString,
         phone_number: this.state.phoneNumberString,
         admin: false,
+        subscription: {
+          active: false,
+          plan: {
+            _ref: '1c452ebc-d7e6-4348-b713-a97a4856f667',
+            _type: 'reference'
+          },
+          starting_date: moment(new Date()).format('YYYY-MM-DD').toString(),
+          ending_date: moment(new Date()).format('YYYY-MM-DD').toString()
+        },
+        measures: {
+          bmi: 0,
+          body_fat_percentage: 0,
+          bone_percentage: 0,
+          height: 0,
+          muscle_percentage: 0,
+          weight: 0,
+        }
 
       }
-      const patch = client.patch(doc._id).set({ history: {_id: doc._id + '-history'} })
       client
         .createIfNotExists(doc)
         .then((res) => {
           console.log('User was created document ID is ' + res._id)
-          Alert.alert(
-            SCREENS.SIGNIN,
-            ALERTS.SIGNIN_SUCCESS,
-            [{ text: BUTTONS.OK }],
-            { cancelable: false }
-          );
+          this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.SUCCESS, message: ALERTS.USER_CREATED_SUCCESSFULLY, type: TYPE_ALERT.SUCCESS } });
         })
         .then(() => client.createIfNotExists({ _id: doc._id + '-history', _type: 'history' }))
         .then(() => { this._resetState(); this.props.navigation.navigate(SCREENS.LOGIN); })
         .catch((err) => {
           console.error('Hubo un error al crear el usuario: ', err.message);
-          this.setState({ isLoading: false });
-          Alert.alert(
-            SCREENS.SIGNIN,
-            ALERTS.ERROR_SIGNIN,
-            [{ text: BUTTONS.OK }],
-            { cancelable: false }
-          );
+          this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.EMAIL_ALREADY_EXIST, type: TYPE_ALERT.ERROR } });
         })
     }
+    this.setState({ isLoading: false });
   };
 
   _onSigninTextChangedFName = event => {
@@ -183,7 +204,26 @@ class SigninScreen extends Component {
     const { navigation } = this.props;
 
     const spinner = this.state.isLoading ? (
-      <ActivityIndicator size='large' />
+      <Spinner size='large' color='white' />
+    ) : null;
+
+    const alert = this.state.alert.show ? (
+      <Alert
+        status={this.state.alert.type}
+        action={
+          <IconButton
+            icon={<CloseIcon size="xs" />}
+            onPress={() => this.setState({ alert: { show: false, title: '', message: '', type: '' } })}
+          />
+        }
+        actionProps={{
+          alignSelf: "center",
+        }}
+      >
+        <Alert.Icon />
+        <Alert.Title>{this.state.alert.title}</Alert.Title>
+        <Alert.Description>{this.state.alert.message}</Alert.Description>
+      </Alert>
     ) : null;
 
     return (
@@ -193,11 +233,15 @@ class SigninScreen extends Component {
         start={{ x: VALUES.CERO, y: VALUES.CERO }}
         end={{ x: VALUES.CERO, y: VALUES.UNO }}
       >
-        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+        <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />
+        <KeyboardAvoidingView style={styles.container}>
           <View style={styles.loginContainer}>
             <Image style={styles.logo} source={IconLogo} />
           </View>
           {spinner}
+          <Collapse isOpen={this.state.alert.show}>
+            {alert}
+          </Collapse>
           <View style={styles.containerForm}>
             <TextInput
               style={styles.input}
@@ -358,7 +402,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignSelf: 'center',
-    flex: 1,
+    flex: 0.5,
     height: '60%',
     resizeMode: 'contain',
     width: '60%',

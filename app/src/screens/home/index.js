@@ -26,7 +26,6 @@ class HomeScreen extends Component {
         { key: 'home', title: 'Inicio', iconSelected: ICONS.MD_HOME, icon: ICONS.MD_HOME_OUTLINE },
         { key: 'routines', title: 'Rutinas', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD_OUTLINE },
         { key: 'stats', title: 'Historial', iconSelected: ICONS.MD_TRENDING_UP, icon: ICONS.MD_TRENDING_UP_OUTLINE },
-        //{ key: 'stats ', title: 'Stats', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD },
       ]
     };
   }
@@ -105,7 +104,7 @@ class HomeScreen extends Component {
             <HamburgerIcon ml={2} size="md" color='white' />
           </Pressable>
           <Center flex={1} >
-            <Heading size="md" color='white'>{'Fitness Addiction'}</Heading>
+            <Heading size="md" color='white'>{'Fitness Addiction'}{this.props.route.params.name}</Heading>
           </Center>
         </HStack>
         <Divider />

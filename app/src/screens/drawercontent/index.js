@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import {
   Text,
   Avatar,
@@ -19,13 +20,42 @@ import {
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import IconLogo from '../../assets/logo.png';
 import IconUser from '../../assets/user.jpg';
-import DrawerBackground from '../../assets/drawerBackground8.png';
+import DrawerBackground from '../../assets/drawerBackground.png';
 import { TITLES, DRAWER_OPTIONS } from '../../config/constants';
 
-const name = 'Steven';
+
 
 export default function DrawerContent(props) {
+  const [userName, setName] = useState('');
+
+  const _getRememberedName = async () => {
+    try {
+      const name = await SecureStore.getItemAsync('NAME');
+      console.log(name)
+      if (name !== null) {
+        setName(name);
+      }
+    } catch (error) {
+    }
+  };
+
+  useEffect(() => {
+    _getRememberedName()
+  }, [])
+
+  _resetSecureStore = async () => {
+    try {
+      await SecureStore.deleteItemAsync('EMAIL');
+      await SecureStore.deleteItemAsync('PASSWORD');
+      await SecureStore.deleteItemAsync('NAME');
+    } catch (error) {
+      // Error removing
+    }
+  };
+
+
   return (
+
     <DrawerContentScrollView {...props} safeArea>
       <VStack>
         <AspectRatio ratio={17 / 9} >
@@ -51,7 +81,7 @@ export default function DrawerContent(props) {
         <HStack space={4} alignItems="center" p={2}>
           <Avatar source={IconUser}></Avatar>
           <Heading size="sm" ml={-1}>
-            ¡{TITLES.WELCOME} {name}!
+            ¡{TITLES.WELCOME} {userName}!
           </Heading>
         </HStack>
         <Divider />
@@ -64,6 +94,12 @@ export default function DrawerContent(props) {
               </HStack>
             </Pressable>
           ))}
+          <Pressable  onPress={() => {_resetSecureStore(), props.navigation.navigate('Login')}} py={2}>
+              <HStack space={4} px={4} py={3} alignItems='center'>
+                <Icon as={<Ionicons name={'md-log-out-outline'} />}></Icon>
+                <Text>Cerrar Sesión</Text>
+              </HStack>
+            </Pressable>
         </VStack>
         <Divider />
       </VStack>

@@ -14,6 +14,7 @@ export default {
       type: 'string',
       options: {
         list: [
+          {title: 'Sin suscripción', value: 'no subscription'},
           {title: 'Funcional', value: 'functional'},
           {title: 'Musculación', value: 'musculation'},
           {title: 'Funcional y Musculación', value: 'functional and musculation'},

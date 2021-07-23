@@ -65,7 +65,7 @@ class StatsTab extends Component {
   }
 
   shouldComponentUpdate() {
-    if (this.props.index == 0) {
+    if (this.props.index !== 2) {
       return false
     }
     return true
@@ -228,7 +228,7 @@ class StatsTab extends Component {
                 <XAxis
                   style={{ marginHorizontal: -10, marginLeft: 30, flex: 0.1 }}
                   data={this.dates}
-                  formatLabel={(index) => this.dates[index]}
+                  formatLabel={index => this.dates[index]}
                   contentInset={{ left: 30, right: 30 }}
                   svg={{ fontSize: 10, fill: 'black' }}
                 />

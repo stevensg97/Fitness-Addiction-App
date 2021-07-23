@@ -36,25 +36,24 @@ export default {
       title: 'Número de teléfono',
       name: 'phone_number',
       type: 'string',
+      initialValue: ''
     },
     {
       title: '¿Es un administrador?',
       name: 'admin',
       type: 'boolean',
+      initialValue: false
     },
     {
       title: 'Suscripción',
       name: 'subscription',
       type: 'object',
-      initialValue: {
-        active: false
-      },
       fields: [
         {
           title: 'Plan',
           name: 'plan',
           type: 'reference',
-          to: [{ type: 'plan' }]
+          to: [{ type: 'plan' }],
         },
         {
           title: 'Activo',
@@ -77,9 +76,17 @@ export default {
           options: {
             dateFormat: 'DD-MM-YYYY',
             calendarTodayLabel: 'Today'
-          }
+          },
         },
-      ]
+      ],
+      initialValue: {
+        plan:{
+          _ref: '1c452ebc-d7e6-4348-b713-a97a4856f667'
+        },
+        active: false,
+        starting_date: (new Date()).toISOString(),
+        ending_date: (new Date()).toISOString()
+      },
     },
     {
       title: 'Medidas',
@@ -98,34 +105,40 @@ export default {
           title: 'Altura (cm)',
           name: 'height',
           type: 'number',
+          initialValue: 0
         },
         {
           title: 'Peso (kg)',
           name: 'weight',
           type: 'number',
+          initialValue: 0
         },
         {
           title: 'IMC',
           name: 'bmi',
           type: 'number',
+          initialValue: 0,
           validation: (Rule) => Rule.precision(2),
         },
         {
           title: 'Porcentaje muscular',
           name: 'muscle_percentage',
           type: 'number',
+          initialValue: 0
         },
         {
           title: 'Porcentaje de grasa corporal',
           name: 'body_fat_percentage',
           type: 'number',
+          initialValue: 0
         },
         {
           title: 'Porcentaje óseo',
           name: 'bone_percentage',
           type: 'number',
+          initialValue: 0
         },
       ]
     }
-  ]
+  ],
 }
