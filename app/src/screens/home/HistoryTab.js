@@ -41,7 +41,7 @@ const builder = imageUrlBuilder(client);
 
 const LISTITEM_HEIGHT = 65;
 
-class StatsTab extends Component {
+class HistoryTab extends Component {
   constructor(props) {
     LogBox.ignoreLogs(['Setting a timer']);
     super(props);
@@ -246,5 +246,5 @@ export default function (props) {
   const navigation = useNavigation();
 
 
-  return <StatsTab {...props} navigation={navigation} />;
+  return <HistoryTab {...props} navigation={navigation} />;
 }

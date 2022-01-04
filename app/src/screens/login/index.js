@@ -93,7 +93,7 @@ class LoginScreen extends Component {
             this._rememberPassword();
             this._rememberName(res[0].name);
             this.props.navigation.navigate(SCREENS.HOME, {email: this.state.emailString});
-            this.setState({ emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
+            this.setState({ isLoading: false, emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
           } else {
             this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.LOGIN_NOT_MATCH, type: TYPE_ALERT.ERROR } });
           }
@@ -102,7 +102,6 @@ class LoginScreen extends Component {
           this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.ERROR_ON_LOGIN, type: TYPE_ALERT.ERROR } });
         })
     }
-    this.setState({ isLoading: false });
   };
 
   _onLoginTextChangedEmail = event => {
