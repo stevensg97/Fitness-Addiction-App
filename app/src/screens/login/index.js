@@ -17,6 +17,10 @@ import {
   IconButton,
   CloseIcon,
   Alert,
+  Box,
+  VStack,
+  HStack,
+  Center
 } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient';
 import IconLogo from '../../assets/logo.png';
@@ -58,18 +62,18 @@ class LoginScreen extends Component {
     const email = await this._getRememberedEmail();
     const password = await this._getRememberedPassword();
     if (email !== null && password !== null) {
-      this.setState({emailString: email, passwordString: password})
+      this.setState({ emailString: email, passwordString: password })
       //this.props.navigation.navigate(SCREENS.HOME, { email });
     }
   }
 
   _checkTextInputs = () => {
     if (!this.state.emailString.trim() || !this.state.emailString.includes('@')) {
-      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_EMAIL, type: TYPE_ALERT.ERROR } });
+      this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_EMAIL, type: TYPE_ALERT.ERROR } });
       return;
     }
     if (!this.state.passwordString.trim()) {
-      this.setState({ alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_PASSWORD, type: TYPE_ALERT.ERROR } });
+      this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.INVALID_PASSWORD, type: TYPE_ALERT.ERROR } });
       return;
     }
     //Checked Successfully
@@ -92,7 +96,7 @@ class LoginScreen extends Component {
             this._rememberEmail();
             this._rememberPassword();
             this._rememberName(res[0].name);
-            this.props.navigation.navigate(SCREENS.HOME, {email: this.state.emailString});
+            this.props.navigation.navigate(SCREENS.HOME, { email: this.state.emailString });
             this.setState({ isLoading: false, emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
           } else {
             this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.LOGIN_NOT_MATCH, type: TYPE_ALERT.ERROR } });
@@ -182,22 +186,26 @@ class LoginScreen extends Component {
     ) : null;
 
     const alert = this.state.alert.show ? (
-      <Alert
-        status={this.state.alert.type}
-        action={
-          <IconButton
-            icon={<CloseIcon size="xs" />}
-            onPress={() => this.setState({ alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } })}
-          />
-        }
-        actionProps={{
-          alignSelf: "center",
-        }}
-      >
-        <Alert.Icon />
-        <Alert.Title>{this.state.alert.title}</Alert.Title>
-        <Alert.Description>{this.state.alert.message}</Alert.Description>
-      </Alert>
+      <Center>
+        <Alert w="90%" maxW="400" status={this.state.alert.type} colorScheme={this.state.alert.type}>
+          <VStack space={2} flexShrink={1} w="100%">
+            <HStack flexShrink={1} space={2} alignItems="center" justifyContent="space-between">
+              <HStack flexShrink={1} space={2} alignItems="center">
+                <Alert.Icon />
+                <Text fontSize="md" fontWeight="medium" color="coolGray.800">
+                  {this.state.alert.title}
+                </Text>
+              </HStack>
+              <IconButton variant="unstyled" onPress={() => this.setState({ alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } })} icon={<CloseIcon size="3" color="coolGray.600" />} />
+            </HStack>
+            <Box pl="6" _text={{
+              color: "coolGray.600"
+            }}>
+              {this.state.alert.message}
+            </Box>
+          </VStack>
+        </Alert>
+      </Center>
     ) : null;
 
     return (
@@ -212,7 +220,7 @@ class LoginScreen extends Component {
           <View style={styles.loginContainer}>
             <Image style={styles.logo} source={IconLogo} />
           </View>
-          {spinner}
+            {spinner}
           <Collapse isOpen={this.state.alert.show}>
             {alert}
           </Collapse>

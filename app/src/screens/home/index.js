@@ -11,7 +11,7 @@ import { colors } from '../../config/styles';
 import { ICONS } from '../../config/constants'
 import HomeTab from './HomeTab';
 import RoutinesTab from './RoutinesTab';
-import HistoryTab from './HistoryTab';
+//import HistoryTab from './HistoryTab';
 
 const initialLayout = { width: Dimensions.get('window').width };
 
@@ -22,10 +22,10 @@ class HomeScreen extends Component {
     this.state = {
       isReady: false,
       index: 0,
-      routes: [
+      routes: [ //Define tabs on home page
         { key: 'home', title: 'Inicio', iconSelected: ICONS.MD_HOME, icon: ICONS.MD_HOME_OUTLINE },
         { key: 'routines', title: 'Rutinas', iconSelected: ICONS.MD_CLIPBOARD, icon: ICONS.MD_CLIPBOARD_OUTLINE },
-        { key: 'history', title: 'Historial', iconSelected: ICONS.MD_TRENDING_UP, icon: ICONS.MD_TRENDING_UP_OUTLINE },
+        //{ key: 'history', title: 'Historial', iconSelected: ICONS.MD_TRENDING_UP, icon: ICONS.MD_TRENDING_UP_OUTLINE },
       ]
     };
   }
@@ -77,7 +77,7 @@ class HomeScreen extends Component {
   _renderScene = SceneMap({
     home: HomeTab, //HomeTab
     routines: RoutinesTab, //RoutinesTab
-    history: HistoryTab //HistoryTab
+    //history: HistoryTab //HistoryTab
   });
 
   renderScene = ({ route }) => {
@@ -86,8 +86,8 @@ class HomeScreen extends Component {
         return <HomeTab />;
       case 'routines':
         return <RoutinesTab />;
-      case 'history':
-        return <HistoryTab index={this.state.index} />;
+      /* case 'history':
+        return <HistoryTab index={this.state.index} />; */
       default:
         return null;
     }

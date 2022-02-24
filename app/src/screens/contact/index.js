@@ -12,7 +12,8 @@ import {
   Divider,
   Icon,
   Text,
-  Image
+  Image,
+  ScrollView
 } from 'native-base';
 import {
   Ionicons
@@ -107,9 +108,25 @@ class ContactScreen extends Component {
               </VStack>
             </Box>
             <Box>
+              <Heading size='md'>{TITLES.SOCIAL_NETWORKS}</Heading>
+              <Center pt={4}>
+                <Pressable>
+                  <HStack space={4}>
+                    <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.facebook) }}>
+                      <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_FACEBOOK} />} />
+                    </Pressable>
+                    <Divider orientation='vertical' />
+                    <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.instagram) }}>
+                      <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_INSTAGRAM} />} />
+                    </Pressable>
+                  </HStack>
+                </Pressable>
+              </Center>
+            </Box>
+            {/* <Box>
               <VStack space={4}>
                 <Heading size='md'>{TITLES.LOCATION}</Heading>
-                <Center  width='100%' height='50%' bg='white' >
+                <Center width='100%' height='50%' bg='white' >
                   <MapView style={{ width: '100%', height: '100%' }} initialRegion={{
                     latitude: 10.2626389,
                     longitude: -85.5848056,
@@ -119,27 +136,9 @@ class ContactScreen extends Component {
                     <Marker onPress={() => { Linking.openURL(this.state.information.location) }} coordinate={{ latitude: 10.2626389, longitude: -85.5848056 }} icon={IconMarker} />
                   </MapView>
                 </Center>
-                <Divider/>
-                <Box>
-                <Heading size='md'>{TITLES.SOCIAL_NETWORKS}</Heading>
-                <Center pt={4}>
-                  <Pressable>
-                    <HStack space={4}>
-                      <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.facebook) }}>
-                        <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_FACEBOOK} />} />
-                      </Pressable>
-                      <Divider orientation='vertical' />
-                      <Pressable _pressed={{ opacity: 0.5 }} onPress={() => { Linking.openURL(this.state.information.social_networks.instagram) }}>
-                        <Icon size='2xl' color='primary.700' as={<Ionicons name={ICONS.LOGO_INSTAGRAM} />} />
-                      </Pressable>
-                    </HStack>
-                  </Pressable>
-                </Center>
-              </Box>
               </VStack>
-
-            </Box>
-
+              <Divider />
+            </Box> */}
           </VStack>
         </Box>
       </Box>

@@ -17,13 +17,17 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.presionlabs.fitnessaddiction",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#700908"
-      }
+      },
+      "package": "com.presionlabs.fitnessaddiction",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./src/assets/favicon.ico"

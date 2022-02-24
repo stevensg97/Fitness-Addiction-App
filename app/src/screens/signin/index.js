@@ -9,6 +9,7 @@ import {
   LogBox
 } from 'react-native';
 import {
+  Box,
   Spinner,
   StatusBar,
   KeyboardAvoidingView,
@@ -16,6 +17,9 @@ import {
   IconButton,
   CloseIcon,
   Alert,
+  Center,
+  HStack,
+  VStack
 } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient';
 import IconLogo from '../../assets/logo.png';
@@ -208,22 +212,26 @@ class SigninScreen extends Component {
     ) : null;
 
     const alert = this.state.alert.show ? (
-      <Alert
-        status={this.state.alert.type}
-        action={
-          <IconButton
-            icon={<CloseIcon size="xs" />}
-            onPress={() => this.setState({ alert: { show: false, title: '', message: '', type: '' } })}
-          />
-        }
-        actionProps={{
-          alignSelf: "center",
-        }}
-      >
-        <Alert.Icon />
-        <Alert.Title>{this.state.alert.title}</Alert.Title>
-        <Alert.Description>{this.state.alert.message}</Alert.Description>
-      </Alert>
+      <Center>
+        <Alert w="90%" maxW="400" status={this.state.alert.type} colorScheme={this.state.alert.type}>
+          <VStack space={2} flexShrink={1} w="100%">
+            <HStack flexShrink={1} space={2} alignItems="center" justifyContent="space-between">
+              <HStack flexShrink={1} space={2} alignItems="center">
+                <Alert.Icon />
+                <Text fontSize="md" fontWeight="medium" color="coolGray.800">
+                  {this.state.alert.title}
+                </Text>
+              </HStack>
+              <IconButton variant="unstyled" onPress={() => this.setState({ alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } })} icon={<CloseIcon size="3" color="coolGray.600" />} />
+            </HStack>
+            <Box pl="6" _text={{
+              color: "coolGray.600"
+            }}>
+              {this.state.alert.message}
+            </Box>
+          </VStack>
+        </Alert>
+      </Center>
     ) : null;
 
     return (
