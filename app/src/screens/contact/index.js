@@ -123,7 +123,7 @@ class ContactScreen extends Component {
                 </Pressable>
               </Center>
             </Box>
-            {/* <Box>
+            <Box>
               <VStack space={4}>
                 <Heading size='md'>{TITLES.LOCATION}</Heading>
                 <Center width='100%' height='50%' bg='white' >
@@ -138,7 +138,7 @@ class ContactScreen extends Component {
                 </Center>
               </VStack>
               <Divider />
-            </Box> */}
+            </Box>
           </VStack>
         </Box>
       </Box>
