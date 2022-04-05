@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
-import { Dimensions, Animated, Pressable } from 'react-native';
+import { Dimensions, Animated, Pressable, Text } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { useNavigation } from '@react-navigation/native';
-import { Box, HStack, HamburgerIcon, Center, Heading, Divider, StatusBar, Icon } from 'native-base';
+import { Box, HStack, HamburgerIcon, Center, Heading, Divider, StatusBar, Icon, Menu } from 'native-base';
 import {
-  Ionicons
+  Ionicons,
+  MaterialIcons
 } from '@expo/vector-icons';
 import { colors } from '../../config/styles';
 import { ICONS } from '../../config/constants'
@@ -21,6 +22,7 @@ class HomeScreen extends Component {
     super(props);
     this.state = {
       isReady: false,
+      menuOpen: false,
       index: 0,
       routes: [ //Define tabs on home page
         { key: 'home', title: 'Inicio', iconSelected: ICONS.MD_HOME, icon: ICONS.MD_HOME_OUTLINE },
@@ -93,6 +95,7 @@ class HomeScreen extends Component {
     }
   };
 
+
   render() {
     const { navigation } = this.props;
 
@@ -103,9 +106,10 @@ class HomeScreen extends Component {
           <Pressable onPress={() => navigation.toggleDrawer()} _pressed={{ opacity: 0.5 }} position="absolute" ml={2} zIndex={1}>
             <HamburgerIcon ml={2} size="md" color='white' />
           </Pressable>
-          <Center flex={1} >
-            <Heading size="md" color='white'>{'Fitness Addiction'}{this.props.route.params.name}</Heading>
+          <Center flex={1}>
+            <Heading size="md" color='white'>{'Fitness Addiction'}</Heading>
           </Center>
+
         </HStack>
         <Divider />
         <TabView

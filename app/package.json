@@ -25,6 +25,7 @@
     "expo-sharing": "~9.1.2",
     "expo-splash-screen": "~0.10.2",
     "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.5.4",
     "moment": "^2.29.1",
     "native-base": "^3.3.7",
     "react": "16.13.1",
@@ -32,6 +33,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-maps": "0.27.1",
+    "react-native-material-menu": "^2.0.0",
     "react-native-pager-view": "5.4.11",
     "react-native-popup-dialog": "^0.18.3",
     "react-native-reanimated": "~2.1.0",
@@ -44,8 +46,7 @@
     "react-native-web": "^0.15.0",
     "sanity": "^2.2.6",
     "styled-components": "^5.3.0",
-    "styled-system": "^5.1.5",
-    "expo-updates": "~0.5.4"
+    "styled-system": "^5.1.5"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

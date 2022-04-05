@@ -96,6 +96,7 @@ class LoginScreen extends Component {
             this._rememberEmail();
             this._rememberPassword();
             this._rememberName(res[0].name);
+            this._rememberIsAdmin(res[0].admin);
             this.props.navigation.navigate(SCREENS.HOME, { email: this.state.emailString });
             this.setState({ isLoading: false, emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
           } else {
@@ -172,6 +173,24 @@ class LoginScreen extends Component {
     try {
       const name = await SecureStore.getItemAsync('NAME');
       return name;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  _rememberIsAdmin = async (isAdmin) => {
+    try {
+      await SecureStore.setItemAsync('ISADMIN', isAdmin);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  _getRememberedIsAdmin = async () => {
+    try {
+      const isAdmin = await SecureStore.getItemAsync('ISADMIN');
+      return isAdmin;
 
     } catch (error) {
       // Error retrieving data

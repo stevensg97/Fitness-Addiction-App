@@ -31,7 +31,7 @@ export function USER(email) {
 
 export function LOGIN(email) {
   return (`*[_type == 'user' && email.current == \'${email}\']{
-    password, name
+    password, name, admin
   }`
   )
 }

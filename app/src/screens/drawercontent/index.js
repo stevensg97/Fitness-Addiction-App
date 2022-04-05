@@ -39,6 +39,16 @@ export default function DrawerContent(props) {
     }
   };
 
+  async function _getRememberedIsAdmin() {
+    try {
+      const isAdmin = await SecureStore.getItemAsync('ISADMIN');
+      return isAdmin;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   useEffect(() => {
     _getRememberedName()
   }, [])
@@ -94,12 +104,22 @@ export default function DrawerContent(props) {
               </HStack>
             </Pressable>
           ))}
-          <Pressable  onPress={() => {_resetSecureStore(), props.navigation.navigate('Login')}} py={2}>
+
+          { true  &&
+            <Pressable onPress={() => { props.navigation.navigate('Payments') }} py={2}>
               <HStack space={4} px={4} py={3} alignItems='center'>
-                <Icon as={<Ionicons name={'md-log-out-outline'} />}></Icon>
-                <Text>Cerrar Sesión</Text>
+                <Icon as={<Ionicons name={'md-cash-outline'} />}></Icon>
+                <Text>Pagos</Text>
               </HStack>
             </Pressable>
+          }
+
+          <Pressable onPress={() => { _resetSecureStore(), props.navigation.navigate('Login') }} py={2}>
+            <HStack space={4} px={4} py={3} alignItems='center'>
+              <Icon as={<Ionicons name={'md-log-out-outline'} />}></Icon>
+              <Text>Cerrar Sesión</Text>
+            </HStack>
+          </Pressable>
         </VStack>
         <Divider />
       </VStack>

@@ -117,6 +117,7 @@ export const SCREENS = {
   ABOUT: 'About',
   LOGIN: 'Login',
   SIGNIN: 'Signin',
+  PAYMENTS: 'Payments',
 }
 
 export const DRAWER_OPTIONS = [
@@ -178,7 +179,8 @@ export const TITLES = {
   BODY_MEASURES: 'Medidas Corporales',
   ACCOUNT: 'Cuenta',
   PRICE: 'Precio',
-  QUANTITY: 'Cantidad'
+  QUANTITY: 'Cantidad',
+  PAYMENTS: 'Pagos'
 
 }
 

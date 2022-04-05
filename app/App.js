@@ -17,6 +17,7 @@ import ContactScreen from './src/screens/contact/index'
 import ScheduleScreen from './src/screens/schedule/index'
 import ProfileScreen from './src/screens/profile/index'
 import SigninScreen from './src/screens/signin/index'
+import PaymentsScreen from './src/screens/payments/index'
 import SplashScreen from './src/screens/splash/index'
 
 import { SCREENS } from './src/config/constants'
@@ -65,8 +66,9 @@ export default function App() {
           <Drawer.Screen name={SCREENS.CONTACT} component={ContactScreen} />
           <Drawer.Screen name={SCREENS.SCHEDULE} component={ScheduleScreen} />
           <Drawer.Screen name={SCREENS.PROFILE} component={ProfileScreen} />
-          <Drawer.Screen name={SCREENS.LOGIN} component={LoginScreen} />
-          <Drawer.Screen name={SCREENS.SIGNIN} component={SigninScreen} />
+          <Drawer.Screen name={SCREENS.PAYMENTS} component={PaymentsScreen} />
+          <Drawer.Screen name={SCREENS.LOGIN} component={LoginScreen} options={{ swipeEnabled: false }}/>
+          <Drawer.Screen name={SCREENS.SIGNIN} component={SigninScreen} options={{ swipeEnabled: false }}/>
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

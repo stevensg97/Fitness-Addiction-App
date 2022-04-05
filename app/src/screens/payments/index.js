@@ -6,12 +6,10 @@ import {
   Pressable,
   Icon,
   Heading,
-  AspectRatio,
   Divider,
   Center,
   Spinner,
   Image,
-  Stack
 
 } from 'native-base';
 import {
@@ -26,7 +24,7 @@ import { ICONS, TITLES } from '../../config/constants';
 
 const builder = imageUrlBuilder(client);
 
-class ScheduleScreen extends Component {
+class PaymentsScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -71,27 +69,10 @@ class ScheduleScreen extends Component {
             <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
           </Pressable>
           <Center flex={1} >
-            <Heading size="md" color='white'>{TITLES.SCHEDULE}</Heading>
+            <Heading size="md" color='white'>{TITLES.PAYMENTS}</Heading>
           </Center>
         </HStack>
         <Divider />
-        {this.state.isReady
-          ? <Box ml={2} mr={2} flexDirection='column' alignItems='center'>
-            <Image
-              size='100%'
-              resizeMode="contain"
-              source={{
-                uri: builder.image(this.state.schedule.schedule).url(),
-              }}
-              alt={"Alternate Text "}
-            />
-          </Box>
-          : <Center flex={1}>
-            <Spinner color='primary.500' size='lg' />
-          </Center>
-
-        }
-
       </Box>
     );
   }
@@ -100,5 +81,5 @@ class ScheduleScreen extends Component {
 export default function (props) {
   const navigation = useNavigation();
 
-  return <ScheduleScreen {...props} navigation={navigation} />;
+  return <PaymentsScreen {...props} navigation={navigation} />;
 }
