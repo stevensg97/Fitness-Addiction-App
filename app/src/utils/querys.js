@@ -47,3 +47,7 @@ export function HISTORY(id) {
   }`
   )
 }
+
+export const PLANS = `*[_type == 'plan']{
+  _id, name, type, price, days
+}`
