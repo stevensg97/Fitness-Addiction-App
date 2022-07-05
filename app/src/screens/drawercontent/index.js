@@ -22,18 +22,37 @@ import IconLogo from '../../assets/logo.png';
 import IconUser from '../../assets/user.jpg';
 import DrawerBackground from '../../assets/drawerBackground.png';
 import { TITLES, DRAWER_OPTIONS } from '../../config/constants';
+import client from '../../utils/client';
+import imageUrlBuilder from '@sanity/image-url';
+import RoutinesTab from '../home/RoutinesTab';
+import { setUser } from '../../utils/globals';
+
+const builder = imageUrlBuilder(client);
 
 
 
 export default function DrawerContent(props) {
   const [userName, setName] = useState('');
+  const [userImage, setImage] = useState(null);
+  const [userAdmin, setAdmin] = useState(null);
 
   const _getRememberedName = async () => {
     try {
       const name = await SecureStore.getItemAsync('NAME');
-      console.log(name)
+      //console.log(name)
       if (name !== null) {
-        setName(name);
+        setName(name.split(' ')[0]);
+      }
+    } catch (error) {
+    }
+  };
+
+  const _getRememberedImage = async () => {
+    try {
+      const image = await SecureStore.getItemAsync('IMAGE');
+      //console.log(image)
+      if (image !== null) {
+        setImage(JSON.parse(image));
       }
     } catch (error) {
     }
@@ -42,6 +61,10 @@ export default function DrawerContent(props) {
   async function _getRememberedIsAdmin() {
     try {
       const isAdmin = await SecureStore.getItemAsync('ISADMIN');
+      //console.log(isAdmin, typeof(isAdmin))
+      if (isAdmin !== null) {
+        setAdmin(isAdmin);
+      }
       return isAdmin;
 
     } catch (error) {
@@ -50,19 +73,26 @@ export default function DrawerContent(props) {
   };
 
   useEffect(() => {
-    _getRememberedName()
-  }, [])
+    if (global.loadUserInfo) {
+      _getRememberedName();
+      _getRememberedImage();
+      _getRememberedIsAdmin();
+    }
+
+  }, [global.loadUserInfo])
 
   _resetSecureStore = async () => {
     try {
+      global.loadUserInfo = false;
       await SecureStore.deleteItemAsync('EMAIL');
       await SecureStore.deleteItemAsync('PASSWORD');
       await SecureStore.deleteItemAsync('NAME');
+      await SecureStore.deleteItemAsync('IMAGE');
+      await SecureStore.deleteItemAsync('ISADMIN');
     } catch (error) {
       // Error removing
     }
   };
-
 
   return (
 
@@ -89,7 +119,12 @@ export default function DrawerContent(props) {
           </ZStack>
         </AspectRatio>
         <HStack space={4} alignItems="center" p={2}>
-          <Avatar source={IconUser}></Avatar>
+          <Image
+            size='sm'
+            alt='User'
+            rounded={'full'}
+            source={userImage != null ? { uri: builder.image(userImage).url() } : IconUser}
+          />
           <Heading size="sm" ml={-1}>
             ¡{TITLES.WELCOME} {userName}!
           </Heading>
@@ -105,7 +140,7 @@ export default function DrawerContent(props) {
             </Pressable>
           ))}
 
-          { true  &&
+          {userAdmin === 'true' &&
             <Pressable onPress={() => { props.navigation.navigate('Payments') }} py={2}>
               <HStack space={4} px={4} py={3} alignItems='center'>
                 <Icon as={<Ionicons name={'md-cash-outline'} />}></Icon>

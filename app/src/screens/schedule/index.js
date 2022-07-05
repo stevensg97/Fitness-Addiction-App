@@ -76,17 +76,19 @@ class ScheduleScreen extends Component {
         </HStack>
         <Divider />
         {this.state.isReady
-          ? <Box ml={2} mr={2} flexDirection='column' alignItems='center'>
+          ?
+          <Box  flexDirection='column' alignItems='center'>
             <Image
               size='100%'
-              resizeMode="contain"
+              resizeMode="stretch"
               source={{
                 uri: builder.image(this.state.schedule.schedule).url(),
               }}
               alt={"Alternate Text "}
             />
           </Box>
-          : <Center flex={1}>
+          :
+          <Center flex={1}>
             <Spinner color='primary.500' size='lg' />
           </Center>
 

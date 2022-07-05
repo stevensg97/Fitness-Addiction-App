@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import { LogBox } from 'react-native';
+import { LogBox, RefreshControl } from 'react-native';
 import {
   Box,
   StatusBar,
@@ -13,20 +13,28 @@ import {
   Divider,
   Text,
   Icon,
-  Avatar,
+  Image,
   IconButton,
   Input,
   ScrollView,
+  Toast,
 } from 'native-base';
+import * as ImagePicker from 'expo-image-picker'
 import {
   Ionicons
 } from '@expo/vector-icons';
 import client from '../../utils/client';
+import * as FileSystem from 'expo-file-system';
+import { basename } from 'path'
 import { USER } from '../../utils/querys'
 import { colors } from '../../config/styles';
 import { useNavigation } from '@react-navigation/native';
 import { ICONS, PLACEHOLDERS, TITLES } from '../../config/constants';
 import IconUser from '../../assets/user.jpg';
+
+import imageUrlBuilder from '@sanity/image-url';
+
+const builder = imageUrlBuilder(client);
 
 class ProfileScreen extends Component {
 
@@ -40,6 +48,7 @@ class ProfileScreen extends Component {
       flname: '',
       slname: '',
       email: '',
+      image: null,
       password: '',
       phoneNumber: '',
       bodyMeasures: {
@@ -56,12 +65,17 @@ class ProfileScreen extends Component {
         startDate: '',
         endDate: ''
       }
-
-
     };
+    this.newProfileImage = null;
   }
 
   async componentDidMount() {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (status !== 'granted') {
+        alert('Lo sentimos. Debe otorgar el permiso para utilizar esta función.')
+      }
+    }
     await this._getRememberedEmail();
     this.setState({ isReady: true });
 
@@ -74,11 +88,9 @@ class ProfileScreen extends Component {
     this._unsubscribe();
   }
 
-
   _getRememberedEmail = async () => {
     try {
       const email = await SecureStore.getItemAsync('EMAIL');
-      //console.log(email)
       if (email !== null) {
         this.state.storedEmail = email;
         await this._getUserInformation();
@@ -89,24 +101,23 @@ class ProfileScreen extends Component {
 
 
   _getUserInformation = () => {
-    console.log(this.state.storedEmail)
     client
       .fetch(
         USER(this.state.storedEmail)
       )
       .then(res => {
         this.setState({
-          //user: res[0],
           fname: res[0].name,
           flname: res[0].flname,
           slname: res[0].slname,
           email: res[0].email.current,
+          image: res[0].image,
           password: res[0].password,
           phoneNumber: res[0].phone_number,
           bodyMeasures: {
             height: res[0].measures.height,
             weight: res[0].measures.weight,
-            bmi: res[0].measures.bmi,
+            bmi: String(Number(Number(res[0].measures.weight) / Number(res[0].measures.height / 100) ** 2).toFixed(1)),
             musclePercentage: res[0].measures.muscle_percentage,
             bodyFatPercentage: res[0].measures.body_fat_percentage,
             bonePercentage: res[0].measures.bone_percentage
@@ -118,16 +129,9 @@ class ProfileScreen extends Component {
             endDate: res[0].subscription.ending_date
           }
         });
-        //console.log(this.state.user);
       })
       .catch(err => {
         this.setState({ isReady: false, });
-        /* Alert.alert(
-          SCREENS.CONTACT,
-          ALERTS.FAILURE,
-          [{ text: BUTTONS.OK }],
-          { cancelable: false }
-        ); */
       })
   };
 
@@ -179,6 +183,54 @@ class ProfileScreen extends Component {
     });
   };
 
+  _updateProfileImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        this.newProfileImage = result.uri;
+        this.setState({ image: null })
+
+        let options = { encoding: FileSystem.EncodingType.UTF8 };
+        const file = await FileSystem.readAsStringAsync(result.uri, options);
+      }
+    } catch (error) {
+    }
+  };
+
+
+  _updateUserProfile = () => {
+    client
+      .patch(
+        this.state.storedEmail.replace('@', '-')
+      )
+      .set({
+        name: this.state.fname,
+        flname: this.state.flname,
+        slname: this.state.slname,
+        email: { current: this.state.email },
+        phone_number: this.state.phoneNumber,
+        measures: {
+          height: this.state.bodyMeasures.height,
+          weight: this.state.bodyMeasures.weight,
+          muscle_percentage: this.state.bodyMeasures.musclePercentage,
+          body_fat_percentage: this.state.bodyMeasures.bodyFatPercentage,
+          bone_percentage: this.state.bodyMeasures.bonePercentage
+        }
+      })
+      .commit()
+      .then((updatedUser) => {
+        alert('Cambios realizados exitosamente');
+      })
+      .catch((err) => {
+        alert('Algo salió mal, por favor intentar de nuevo');
+      })
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -186,32 +238,52 @@ class ProfileScreen extends Component {
         <StatusBar backgroundColor={colors.primary[600]} barStyle="light-content" />
         <HStack alignItems="center" py={4} bg='primary.500' >
           <Pressable _pressed={{ opacity: 0.5 }} onPress={() => navigation.goBack()} position="relative" ml={2} zIndex={1}>
-            <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
+            <Icon size='xl' ml={2} color='white' as={<Ionicons name={ICONS.MD_ARROW_BACK} />} />
           </Pressable>
           <Center flex={1} position="relative">
             <Heading size="md" color='white'>{TITLES.PROFILE}</Heading>
           </Center>
-          <Pressable _pressed={{ opacity: 0.5 }} onPress={() => alert('Cambios guardados')} position="relative" mr={2}>
-            <Icon size='md' ml={2} color='white' as={<Ionicons name={ICONS.MD_CHECKMARK} />} />
+          <Pressable _pressed={{ opacity: 0.5 }} onPress={() => this._updateUserProfile()} position="relative" mr={2}>
+            <Icon size='xl' ml={2} color='white' as={<Ionicons name={ICONS.MD_CHECKMARK} />} />
           </Pressable>
         </HStack>
 
         <Divider />
 
-        <ScrollView flex={1} >
+        <ScrollView flex={1} refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={this._getRememberedEmail}
+          />
+        }>
           <VStack space={5} divider={<Divider />}>
             <Box h="40" alignItems="center" justifyContent="center">
               <ZStack h='60%' w='23.4%'>
                 <Box>
-                  <Avatar
-                    size='xl'
-                    source={IconUser}
-                  />
+                  {
+                    this.newProfileImage != null ? <Image
+                      size='lg'
+                      alt='User'
+                      rounded={'full'}
+                      source={{ uri: this.newProfileImage }}
+
+                    ></Image>
+                      :
+                      <Image
+                        size='lg'
+                        alt='User'
+                        rounded={'full'}
+                        source={this.state.image != null ? { uri: builder.image(this.state.image).url() } : IconUser}
+
+                      ></Image>
+                  }
+
                 </Box>
                 <Box mt={65} ml={55} bg='white' border={1} borderColor='grey' borderRadius={100}>
                   <IconButton
                     variant="ghost"
                     borderRadius={100}
+                    onPress={this._updateProfileImage}
                     icon={<Icon size="sm" as={<Ionicons name="md-create" />} color="primary.500" />}
                   />
                 </Box>

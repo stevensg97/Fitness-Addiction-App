@@ -38,6 +38,7 @@ import { LOGIN } from '../../utils/querys'
 import client from '../../utils/client';
 
 import { useNavigation } from '@react-navigation/native';
+import { setUser } from '../../utils/globals';
 
 class LoginScreen extends Component {
 
@@ -91,19 +92,23 @@ class LoginScreen extends Component {
         .then(res => {
           //console.log(res)
           if (
-            this.state.passwordString == res[0].password
+            this.state.passwordString === res[0].password
           ) {
             this._rememberEmail();
             this._rememberPassword();
             this._rememberName(res[0].name);
-            this._rememberIsAdmin(res[0].admin);
+            this._rememberImage(res[0].image);
+            this._rememberIsAdmin(res[0].admin.toString())
+            global.loadUserInfo = true;
             this.props.navigation.navigate(SCREENS.HOME, { email: this.state.emailString });
-            this.setState({ isLoading: false, emailString: '', passwordString: '', alert: { show: false, title: ALERT_TITLES.ERROR, message: '', type: '' } });
+            this.setState({ isLoading: false, emailString: '', passwordString: '', alert: { show: false, title: '', message: '', type: '' } });
+
           } else {
             this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.LOGIN_NOT_MATCH, type: TYPE_ALERT.ERROR } });
           }
         })
         .catch(err => {
+          console.log(err)
           this.setState({ isLoading: false, alert: { show: true, title: ALERT_TITLES.ERROR, message: ALERTS.ERROR_ON_LOGIN, type: TYPE_ALERT.ERROR } });
         })
     }
@@ -179,6 +184,24 @@ class LoginScreen extends Component {
     }
   };
 
+  _rememberImage = async (image) => {
+    try {
+      await SecureStore.setItemAsync('IMAGE', JSON.stringify(image));
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  _getRememberedImage = async () => {
+    try {
+      const image = await SecureStore.getItemAsync('IMAGE');
+      return image;
+
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   _rememberIsAdmin = async (isAdmin) => {
     try {
       await SecureStore.setItemAsync('ISADMIN', isAdmin);
@@ -239,7 +262,7 @@ class LoginScreen extends Component {
           <View style={styles.loginContainer}>
             <Image style={styles.logo} source={IconLogo} />
           </View>
-            {spinner}
+          {spinner}
           <Collapse isOpen={this.state.alert.show}>
             {alert}
           </Collapse>

@@ -51,21 +51,23 @@ class AboutScreen extends Component {
           </Center>
         </HStack>
         <Divider />
-        <VStack flex={1} >
-          <Divider size={3} />
-          <Center>
-            <Text bold fontSize='2xl'>Fitness Addiction App</Text>
-            <Image
-              source={IconLogo}
-              alt='Logo'
-              height={150}
-              width={150}
-            />
-            <Text bold fontSize='xl'>Versión</Text>
-            <Text bold fontSize='lg'>1.0.1</Text>
-          </Center>
-          <Divider size={3} />
-          <Center>
+        <Center flex={0.8}>
+          <VStack >
+            <Divider />
+            <Center>
+              <Text bold fontSize='2xl'>Fitness Addiction App</Text>
+              <Image
+                source={IconLogo}
+                alt='Logo'
+                height={150}
+                width={150}
+              />
+              <Text bold fontSize='xl'>Versión</Text>
+              <Text bold fontSize='lg'>1.0.1</Text>
+              <Button size={'lg'} mt={3} bg="primary.500" w='100%' onPress={() => { Linking.openURL('tel:' + '84352627') }}>Contacto del desarrollador</Button>
+            </Center>
+            <Divider mt={3} />
+            {/* <Center mt={3}>
             <Text bold fontSize='2xl' >Desarrollado por</Text>
             <Image
               source={IconPrelabs}
@@ -73,12 +75,14 @@ class AboutScreen extends Component {
               height={150}
               width={150}
             />
-            <Divider size={3} />
+            <Divider  mt={3}/>
             <Button colorScheme="info" w='100%' onPress={() => { Linking.openURL('tel:' + '84352627') }}>Contáctanos</Button>
-            <Divider size={3} />
-          </Center>
+            <Divider  />
+          </Center> */}
 
-        </VStack>
+          </VStack>
+        </Center>
+
       </Box>
     );
   }

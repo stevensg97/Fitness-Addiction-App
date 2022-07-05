@@ -93,6 +93,15 @@ export default {
               type: 'boolean',
             },
           ],
+          orderings: [
+            {
+              title: 'Nombre',
+              name: 'nombre',
+              by: [
+                {field: 'name', direction: 'asc'}
+              ]
+            },
+          ],
           preview: {
             select: {
               exercise: 'exercise.name',

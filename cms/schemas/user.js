@@ -39,6 +39,11 @@ export default {
       initialValue: ''
     },
     {
+      title: 'Imagen',
+      name: 'image',
+      type: 'image',
+    },
+    {
       title: '¿Es un administrador?',
       name: 'admin',
       type: 'boolean',
@@ -95,7 +100,6 @@ export default {
       initialValue: {
         height: 0,
         weight: 0,
-        bmi: 0,
         muscle_percentage: 0,
         body_fat_percentage: 0,
         bone_percentage: 0
@@ -112,13 +116,6 @@ export default {
           name: 'weight',
           type: 'number',
           initialValue: 0
-        },
-        {
-          title: 'IMC',
-          name: 'bmi',
-          type: 'number',
-          initialValue: 0,
-          validation: (Rule) => Rule.precision(2),
         },
         {
           title: 'Porcentaje muscular',

@@ -10,7 +10,7 @@ import {
   Box,
   Center,
   Modal,
-  Pressable
+  Pressable,
 } from 'native-base';
 import {
   SCREENS,
@@ -88,16 +88,20 @@ class RoutinesTab extends Component {
         {/*================= Routines List =================*/}
         <FlatList
           data={this.state.routines}
+          refreshing={false}
+          onRefresh={() => {
+            this._getRoutines();
+          }}
           renderItem={({ item, index }) => (
             <Pressable onPress={() => { this._setRoutinesModalVisible(true); this._setRoutinesModalExercises(index, item.name) }} >
-              <Box border={0.5} my={1} borderRadius='md' >
-                <Box px={4} pt={4} bg='primary.700'>
+              <Box border={0.5} m={0.5}>
+                <Box px={4} pt={4} borderTopRadius='20' bg='primary.700'>
                   <Center pb={1}>
                     <Heading size="sm" color='white'>{item.name}</Heading>
                     <Text color='grey'>{item.type}</Text>
                   </Center>
                 </Box>
-                <AspectRatio w="100%" ratio={16 / 9}>
+                <AspectRatio w="100%" ratio={16 / 9} >
                   <Image
                     source={{
                       uri: builder.image(item.image).url(),

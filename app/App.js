@@ -36,24 +36,6 @@ const config = {
   },
 };
 
-const _rememberEmail = async () => {
-  try {
-    await AsyncStorage.setItem('EMAIL', 'maiderr97@gmail.com');
-  } catch (error) {
-    // Error saving data
-  }
-};
-
-const _getRememberedEmail = async () => {
-  try {
-    email = await AsyncStorage.getItem('EMAIL');
-    return email;
-  } catch (error) {
-    // Error retrieving data
-  }
-};
-
-
 export default function App() {
   return (
     <NativeBaseProvider config={config} theme={theme}>

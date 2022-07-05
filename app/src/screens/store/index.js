@@ -48,14 +48,14 @@ class StoreScreen extends Component {
   }
 
   async componentDidMount() {
-    await this._getAds();
+    await this._getProducts();
   }
 
   componentDidUpdate() {
-    //this._getAds(); Genera demasiados request
+    //this._getProducts(); Genera demasiados request
   }
 
-  _getAds = () => {
+  _getProducts = () => {
     client
       .fetch(
         PRODUCTS
@@ -94,12 +94,12 @@ class StoreScreen extends Component {
           <FlatList
             data={this.state.products}
             renderItem={({ item }) => (
-              <Box border={0.5} my={1} borderRadius='md' >
-                <VStack divider={<Divider />} bg='white'>
-                  <Box px={4} pt={4} bg='primary.700'>
+              <Box border={0.5} m={0.5}>
+                <VStack divider={<Divider />} bg='white' borderRadius='20'>
+                  <Box px={4} pt={4} bg='primary.700' borderTopRadius='20'>
                     <Heading size="sm" color='white' pb={3}>{item.name}</Heading>
                   </Box>
-                  <AspectRatio w="100%" ratio={16 / 9}>
+                  <AspectRatio w="100%" ratio={1}>
                     <Image
                       source={{
                         uri: builder.image(item.image).url(),

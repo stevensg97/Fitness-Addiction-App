@@ -14,6 +14,11 @@ export const ALERTS = {
   EMPTY_CHECK_PASSWORD: 'Debe verificar la contraseña.',
   PASSWORD_DOES_NOT_MATCH: 'La contraseña no coincide.',
   USER_CREATED_SUCCESSFULLY: 'Usuario registrado satisfactoriamente.',
+  // ----------- Payments Alerts ----------- //
+  ERROR_GETTING_PLANS: 'Algo salió mal al obtener los planes.',
+  ERROR_GETTING_DATE: 'Algo salió mal al obtener la fecha.',
+  PLAN_UPDATED_SUCCESSFULLY: 'Plan actualizado satisfactoriamente.',
+  ERROR_UPDATING_PLAN: 'Error al actualizar el plan.',
 
   FAILURE: 'Algo salió mal, por favor inténtelo de nuevo.',
 
